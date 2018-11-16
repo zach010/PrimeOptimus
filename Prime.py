@@ -149,18 +149,22 @@ if __name__ == '__main__':
         single = input('Do you want to calculate if a number is Prime? (y/n): ')
         if single.startswith(str('y')) or single.startswith(str('Y')):
             number = input('Enter the number for a Prime check : ')
+            try:
+                number = int(number)
+            except ValueError:
+                print("Invalid Input. Stuff")
+                start_program()
             mp.dps = len(str(number))
             number = mp.mpf(number)
             if number == mp.mpf(1):
                 print("The number 1 is not considered Prime because it is a square of which all are not Prime.")
-            if number == mp.mpf(2):
+            elif number == mp.mpf(2):
                 print("2 is the only even Prime number. Its not square and its only divisible by 1 and itself.")
             else:
                 num_segments, num_cores = split(number)
                 initialize(num_segments, num_cores, number)
         elif single.startswith(str('n')) or single.startswith(str('N')):
             print("Program Exit.")
-            sys.exit()
         else:
             print("Invalid Input.")
             start_program()
