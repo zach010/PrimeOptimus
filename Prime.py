@@ -152,7 +152,7 @@ if __name__ == '__main__':
             try:
                 number = int(number)
             except ValueError:
-                print("Invalid Input. Stuff")
+                print("Invalid Input.")
                 start_program()
             mp.dps = len(str(number))
             number = mp.mpf(number)
