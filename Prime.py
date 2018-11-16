@@ -165,6 +165,7 @@ if __name__ == '__main__':
                 initialize(num_segments, num_cores, number)
         elif single.startswith(str('n')) or single.startswith(str('N')):
             print("Program Exit.")
+            os.system('cmd /k')
         else:
             print("Invalid Input.")
             return start_program()
