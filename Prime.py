@@ -153,7 +153,7 @@ if __name__ == '__main__':
                 number = int(number)
             except ValueError:
                 print("Invalid Input.")
-                start_program()
+                return start_program()
             mp.dps = len(str(number))
             number = mp.mpf(number)
             if number == mp.mpf(1):
@@ -167,5 +167,5 @@ if __name__ == '__main__':
             print("Program Exit.")
         else:
             print("Invalid Input.")
-            start_program()
+            return start_program()
     start_program()
