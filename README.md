@@ -17,7 +17,7 @@ Progress: ►■■■■■■■■■■◄ 10/10
 Finished processing (18014398777917439.0) in 15.3 seconds.
 18014398777917439.0 is Prime.
 ```
-When a process finishes and returns 1, it will leave an core idle.
+When a process finishes and returns 1, it will leave a core idle.
 My goal is to make the other processes smart enough to realize a
 extra core is available and distribute some of their calculations
 to the extra core. This would dramatically speed up the multiprocessing.
