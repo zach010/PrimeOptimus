@@ -4,7 +4,7 @@
 This Code requires an extra non-default Python module to run named mpmath.
 ```
 The code takes an input from a user and splits the input into smaller (quicker to calculate) numbers
-across a group of processes that is equal to the count of logical processors on your system.
+across a group of parallel processes that is equal to the count of the logical processors on your system.
 ```
 Sample Output:
 Python version 3.7.1 (64-bit)
