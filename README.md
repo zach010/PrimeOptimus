@@ -89,3 +89,4 @@ Calculating...
 Finished processing (1.0e+100000) in 0.7 seconds.
 1.0e+100000 is not Prime.
 ```
+With my 8-thread computer, numbers with one hundred thousand trailing zeros appear to be the limit in size before the program becomes extremely slow. 
