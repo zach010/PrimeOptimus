@@ -23,7 +23,7 @@ def progress_bar(total, progress):
     return
 
 
-def prime_multiprocess(n, s, q, p, t):
+def prime_multiprocess(n, s, q, t, c):
     s.wait()
     const = int(n[2])
     ia = int(mp.floor(mp.sqrt(n[0])))
@@ -31,19 +31,28 @@ def prime_multiprocess(n, s, q, p, t):
     ic = int(mp.floor(mp.sqrt(n[2])) + 1)
     ix, iz = 0, 0
     mp.dps = len(str(ic))
-    ld = int((mp.mpf(ib) / mp.mpf(10)) + 1)
-    for i in range(ia, ic):
-        if const % i == 0:
-            iz += 1
-            if iz > 1:
-                return q.put(0)
-        if i > ib and iz < 2:
-            return q.put(1)
-        if p == 0:
+    ld = int((mp.mpf(ib) / mp.mpf(c)) + 1)
+    if ia == 1:
+        for i in range(ia, ic):
+            if const % i == 0:
+                iz += 1
+                if iz > 1:
+                    return q.put(0)
+            if i > ib and iz < 2:
+                return q.put(1)
             if i % ld == 0:
                 ix += 1
                 t.put(ix)
-    return q.put(1)
+        return q.put(1)
+    else:
+        for i in range(ia, ic):
+            if const % i == 0:
+                iz += 1
+                if iz > 1:
+                    return q.put(0)
+            if i > ib and iz < 2:
+                return q.put(1)
+        return q.put(1)
 
 
 def split(num):
@@ -75,7 +84,6 @@ def initialize(numb_seg, cores, number):
     q_list = [(multiprocessing.Queue()) for _ in range(cores)]
     t_list = [multiprocessing.Queue()]
     n_list = [[0 for _ in range(3)] for _ in range(cores)]
-    p_list = [c for c in range(cores)]
     for s in range(cores):
         for ss in range(1, 2):
             n_list[s][ss+1] = mp.mpf(number)
@@ -83,8 +91,7 @@ def initialize(numb_seg, cores, number):
             n_list[s][ss - 1] = numb_seg[s - 1] + 1
     n_list[0][0] = mp.mpf(1)
     # print(n_list)
-    mp.dps = 512
-    arg_list = [(n_list[args], sync, q_list[args], p_list[args], t_list[0]) for args in range(cores)]
+    arg_list = [(n_list[args], sync, q_list[args], t_list[0], cores) for args in range(cores)]
     processes = [multiprocessing.Process(target=prime_multiprocess, args=arg_list[args]) for args in range(cores)]
     for p in processes:
         p.daemon = True
@@ -96,8 +103,8 @@ def initialize(numb_seg, cores, number):
     while run == 1:
         if not t_list[0].empty():
             x = t_list[0].get()
-            if x <= cores + 1:
-                progress_bar(cores, x - 1)
+            if x <= cores:
+                progress_bar(cores, x + 1)
         for gp in range(cores):
             if not q_list[gp].empty() and tps == 0:
                 data[gp] = q_list[gp].get()
@@ -111,32 +118,27 @@ def initialize(numb_seg, cores, number):
                     sps.append(1)
                 if sum(sps) >= cores:
                     run = 0
-    answer_bits = data
     stop_t = time.time()
-    d_sum = stop_t - start_t
-    if d_sum < 60:
-        print("\rFinished processing (" + str(number) + ") in %.1f seconds." % d_sum)
-        if sum(answer_bits) == cores:
+    t_sum = stop_t - start_t
+    if t_sum < 60:
+        print("\rFinished processing (" + str(number) + ") in %.1f seconds." % t_sum)
+        if sum(data) == cores:
             print("" + str(number) + " is Prime.")
-            os.system('cmd /k')
         else:
             print("" + str(number) + " is not Prime.")
-            os.system('cmd /k')
-    if d_sum >= 60:
-        d_num = d_sum / 60
-        d_dec = format((d_num - math.floor(d_num)) * 60, '.3g')
-        d_min = 'minute'
-        if (d_sum / 60) >= 2:
-            d_min = 'minutes'
-        print("\rFinished processing (" + str(number) + ") in %.0f " % d_num,
-              end=""), print("" + d_min + " and " + d_dec + " seconds.")
-        if sum(answer_bits) == cores:
+    if t_sum >= 60:
+        t_num = t_sum / 60
+        t_dec = format((t_num - math.floor(t_num)) * 60, '.3g')
+        t_min = 'minute'
+        if (t_sum / 60) >= 2:
+            t_min = 'minutes'
+        print("\rFinished processing (" + str(number) + ") in %.0f " % t_num,
+              end=""), print("" + t_min + " and " + t_dec + " seconds.")
+        if sum(data) == cores:
             print("" + str(number) + " is Prime.")
-            os.system('cmd /k')
         else:
             print("" + str(number) + " is not Prime.")
-            os.system('cmd /k')
-        return
+    return start_program()
 
 
 if __name__ == '__main__':
@@ -165,7 +167,7 @@ if __name__ == '__main__':
                 initialize(num_segments, num_cores, number)
         elif single.startswith(str('n')) or single.startswith(str('N')):
             print("Program Exit.")
-            os.system('cmd /k')
+            os.system('cmd /k'), sys.exit()
         else:
             print("Invalid Input.")
             return start_program()
