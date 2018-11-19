@@ -76,9 +76,9 @@ Do you want to calculate if a number is Prime? (y/n):
 ```
 This only took 0.1 seconds to realize. If you enter the number without adding 2, it continues to calculate for much longer than a non prime would take giving it a high probability of ***Primeness***.
 ```
-The code even accepts scientific notation:
-Sample Output:
+The code also accepts scientific notation input:
 ```
+Sample Output:
 ```
 Python version 3.7.1 (64-bit)
 
