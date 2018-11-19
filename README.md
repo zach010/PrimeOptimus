@@ -41,7 +41,7 @@ Finished processing (18014398777917440.0) in 0.3 seconds.
 ```
 Notice the time difference with the same number ± 1.
 The algorithm is smart enough to terminate when any core-process returns a divisible number.
-This means that if the number is prime, the process will hang much much longer.
+This means that if the number is prime, the process will hang much longer as it continues to search for a divisor.
 With this method, its possible to predict highly possible large Mersenne Primes without too much computing.
 
 
