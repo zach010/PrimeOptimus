@@ -152,7 +152,7 @@ if __name__ == '__main__':
         if single.startswith(str('y')) or single.startswith(str('Y')):
             number = input('Enter the number for a Prime check : ')
             try:
-                number = int(number)
+                number = mp.mpf(number)
             except ValueError:
                 print("Invalid Input.")
                 return start_program()
