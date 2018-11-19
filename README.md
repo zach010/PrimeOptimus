@@ -75,11 +75,11 @@ Finished processing (20070660910180315195830303030194383671885755135207094977912
 Do you want to calculate if a number is Prime? (y/n): 
 ```
 This only took 0.1 seconds to realize. If you enter the number without adding 2, it continues to calculate for much longer than a non prime would take giving it a high probability of ***Primeness***.
-
-```py
+```
 The code even accepts scientific notation:
 Sample Output:
-
+```
+```
 Python version 3.7.1 (64-bit)
 
 This computer-system has (8) logical processors initialized for this Prime task.
