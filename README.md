@@ -9,12 +9,12 @@ across a group of processes that is equal to the count of logical processors on 
 Sample Output:
 Python version 3.7.1 (64-bit)
 
-This computer-system has (8) logical processors initialized for this Prime task.
+This computer-system has (8.0) logical processors initialized for this Prime task.
 Do you want to calculate if a number is Prime? (y/n): y
 Enter the number for a Prime check : 18014398777917439
 Calculating...  
 Progress: ►■■■■■■■■■■◄ 10/10 
-Finished processing (18014398777917439.0) in 15.3 seconds.
+Finished processing (18014398777917439.0) in 9.6 seconds.
 18014398777917439.0 is Prime.
 ```
 
