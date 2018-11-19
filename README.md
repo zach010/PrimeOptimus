@@ -17,7 +17,8 @@ Progress: ►■■■■■■■■■■◄ 10/10
 Finished processing (18014398777917439.0) in 13.2 seconds.
 18014398777917439.0 is Prime.
 ```
-Same number minus 1:
+13.2 seconds on 8 threads for 18 quadrillion 14 trillion 398 billion 777 million 917 thousand 439
+That number number minus 1:
 ```
 Python version 3.7.1 (64-bit)
 
