@@ -95,6 +95,7 @@ With my 8-thread computer, numbers with one hundred thousand trailing zeros appe
 Added support for exponental equation entries of the form: x ^ y ± z
 
 ```
+Example output as a test for a Mersenne Prime that is a power of 2 minus 1:
 ```
 Python version 3.7.1 (64-bit)
 
