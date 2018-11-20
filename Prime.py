@@ -123,9 +123,9 @@ def initialize(numb_seg, cores, number):
     if t_sum < 60:
         print("\rFinished processing (" + str(number) + ") in %.1f seconds." % t_sum)
         if sum(data) == cores:
-            print("" + str(number) + " is Prime.")
+            print("The number: " + str(number) + "\nIs Prime.")
         else:
-            print("" + str(number) + " is not Prime.")
+            print("The number: " + str(number) + "\nIs not Prime.")
     if t_sum >= 60:
         t_num = t_sum / 60
         t_dec = format((t_num - math.floor(t_num)) * 60, '.3g')
@@ -135,9 +135,9 @@ def initialize(numb_seg, cores, number):
         print("\rFinished processing (" + str(number) + ") in %.0f " % t_num,
               end=""), print("" + t_min + " and " + t_dec + " seconds.")
         if sum(data) == cores:
-            print("" + str(number) + " is Prime.")
+            print("The number: " + str(number) + "\nIs Prime.")
         else:
-            print("" + str(number) + " is not Prime.")
+            print("The number: " + str(number) + "\nIs not Prime.")
     return start_program()
 
 
@@ -151,6 +151,41 @@ if __name__ == '__main__':
         single = input('Do you want to calculate if a number is Prime? (y/n): ')
         if single.startswith(str('y')) or single.startswith(str('Y')):
             number = input('Enter the number for a Prime check : ')
+            if number.__contains__('^'):
+                add, sub = 0, 0
+                exp = number.find('^')
+                if number.__contains__('-'):
+                    sub = number.find('-')
+                    a_s = number.find('-')
+                elif number.__contains__('+'):
+                    add = number.find('+')
+                    a_s = number.find('+')
+                else:
+                    a_s = len(number)
+                a_or_s = ''.join([number[aos] for aos in range(a_s + 1, len(number))])
+                lead = ''.join([number[l] for l in range(0, exp)])
+                trail = ''.join([number[t] for t in range(exp + 1, a_s)])
+                if add > 0:
+                    try:
+                        number = (int(lead) ** int(trail)) + int(a_or_s)
+                        mp.dps = len(str(number))
+                    except ValueError:
+                        print("Invalid Input.")
+                        return start_program()
+                elif sub > 0:
+                    try:
+                        number = (int(lead) ** int(trail)) - int(a_or_s)
+                        mp.dps = len(str(number))
+                    except ValueError:
+                        print("Invalid Input.")
+                        return start_program()
+                else:
+                    try:
+                        number = int(lead) ** int(trail)
+                        mp.dps = len(str(number))
+                    except ValueError:
+                        print("Invalid Input.")
+                        return start_program()
             try:
                 number = mp.mpf(number)
             except ValueError:
