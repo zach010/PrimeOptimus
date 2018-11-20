@@ -90,3 +90,20 @@ Finished processing (1.0e+100000) in 0.7 seconds.
 1.0e+100000 is not Prime.
 ```
 With my 8-thread computer, numbers with one hundred thousand trailing zeros appear to be the limit in size before the program becomes extremely slow. 
+
+```
+Added support for exponental equation entries of the form: x ^ y ± z
+
+```
+```
+Python version 3.7.1 (64-bit)
+
+This computer-system has (8) logical processors initialized for this Prime task.
+Do you want to calculate if a number is Prime? (y/n): y
+Enter the number for a Prime check : 2^31-1
+Calculating...  
+Progress: ►■■■■■■■■■■◄ 10/10 
+Finished processing (2147483647.0) in 0.3 seconds.
+The number: 2147483647.0
+Is Prime.
+```
