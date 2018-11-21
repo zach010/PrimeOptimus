@@ -82,12 +82,14 @@ def initialize(numb_seg, cores, number, precision):
         for gp in range(cores):
             if not q_list[gp].empty() and tps == 0:
                 data[gp] = q_list[gp].get()
-                progress_bar(cores, sum(data))
+                progress_bar(cores, sum(data)), print(end='')
                 if data[gp] == 0:
+                    print('\rProgress: ►■■■■■■■■■■◄ 10/10')
                     tps = 1
                 if sum(data) == cores:
                     run = 0
             if tps == 1:
+
                 for tp in range(cores):
                     processes[tp].terminate()
                     sps.append(1)
