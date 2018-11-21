@@ -32,7 +32,7 @@ Do you want to calculate if a number is Prime? (y/n): y
 Enter number for Prime test: 2^61+1
 Calculating...  
 Progress: ►■■■■■■■■■■◄ 10/10 
-Finished processing in 0.4 seconds.
+Finished processing in 0.3 seconds.
 Number: 2305843009213693953
 Prime: No
 Length: 19
