@@ -55,6 +55,11 @@ def prime_multiprocess(n, s, q, t, c, p):
         return q.put(1)
 
 
+def exp_multiprocess(e, q):
+    exp = e[0] ** e[1]
+    return q.put(exp)
+
+
 def split(num):
     cores = processor_cnt
     if num <= processor_cnt:
@@ -79,14 +84,27 @@ def split(num):
     return num_seg, cores
 
 
+def exponents(num, exp):
+    cores = processor_cnt
+    if exp <= processor_cnt:
+        cores = int(exp)
+    exp_mod = [1 for _ in range(exp % cores)]
+    exp_div = math.floor(exp / cores)
+    exp_list = [[num, exp_div] for _ in range(cores)]
+    for e in range(len(exp_mod)):
+        exp_list[e] += exp_mod[e]
+    return exp_list, cores
+
+
 def initialize(numb_seg, cores, number, precision):
     sync = Barrier(cores)
     q_list = [(multiprocessing.Queue()) for _ in range(cores)]
     t_list = [multiprocessing.Queue()]
     n_list = [[0 for _ in range(3)] for _ in range(cores)]
+    mpf_number = mp.mpf(number)
     for s in range(cores):
         for ss in range(1, 2):
-            n_list[s][ss+1] = mp.mpf(number)
+            n_list[s][ss+1] = mpf_number
             n_list[s][ss] = numb_seg[s]
             n_list[s][ss - 1] = numb_seg[s - 1] + 1
     n_list[0][0] = mp.mpf(1)
@@ -123,9 +141,9 @@ def initialize(numb_seg, cores, number, precision):
     if t_sum < 60:
         print("\rFinished processing in %.1f seconds." % t_sum)
         if sum(data) == cores:
-            print("Number: " + str(number) + "\nPrime: Yes.\nLength: " + number_len)
+            print("Number: " + str(number) + "\nPrime: Yes\nLength: " + number_len)
         else:
-            print("Number: " + str(number) + "\nPrime: No.\nLength: " + number_len)
+            print("Number: " + str(number) + "\nPrime: No\nLength: " + number_len)
     if t_sum >= 60:
         t_num = t_sum / 60
         t_dec = format((t_num - math.floor(t_num)) * 60, '.3g')
@@ -135,10 +153,25 @@ def initialize(numb_seg, cores, number, precision):
         print("\rFinished processing in %.0f " % t_num,
               end=""), print("" + t_min + " and " + t_dec + " seconds.")
         if sum(data) == cores:
-            print("Number: " + str(number) + "\nPrime: Yes.\nLength: " + number_len)
+            print("Number: " + str(number) + "\nPrime: Yes\nLength: " + number_len)
         else:
-            print("Number: " + str(number) + "\nPrime: No.\nLength: " + number_len)
+            print("Number: " + str(number) + "\nPrime: No\nLength: " + number_len)
     return start_program('nother')
+
+
+def initialize_exp(exp_lst, cores):
+    q_list = [(multiprocessing.Queue()) for _ in range(cores)]
+    arg_list = [(exp_lst[arg], q_list[arg]) for arg in range(len(exp_lst))]
+    processes = [multiprocessing.Process(target=exp_multiprocess, args=arg_list[args]) for args in range(cores)]
+    for p in processes:
+        p.daemon = True
+        p.start()
+    data_q = []
+    for q in q_list:
+        data_q.append(q.get())
+    for i in range(len(data_q)-1):
+        data_q[0] *= data_q[i+1]
+    return data_q[0]
 
 
 if __name__ == '__main__':
@@ -166,26 +199,32 @@ if __name__ == '__main__':
                     a_s = number.find('+')
                 else:
                     a_s = len(number)
+                head = ''.join([number[l] for l in range(0, exp)])
+                tail = ''.join([number[t] for t in range(exp + 1, a_s)])
                 a_or_s = ''.join([number[aos] for aos in range(a_s + 1, len(number))])
-                lead = ''.join([number[l] for l in range(0, exp)])
-                trail = ''.join([number[t] for t in range(exp + 1, a_s)])
                 if add > 0:
                     try:
-                        number = (int(lead) ** int(trail)) + int(a_or_s)
+                        exp_list, core_cnt = exponents(int(head), int(tail))
+                        exp = initialize_exp(exp_list, core_cnt)
+                        number = exp + int(a_or_s)
                         mp.dps = len(str(number + 8))
                     except ValueError:
                         print("Invalid Input.")
                         return start_program('')
                 elif sub > 0:
                     try:
-                        number = (int(lead) ** int(trail)) - int(a_or_s)
+                        exp_list, core_cnt = exponents(int(head), int(tail))
+                        exp = initialize_exp(exp_list, core_cnt)
+                        number = exp - int(a_or_s)
                         mp.dps = len(str(number + 8))
                     except ValueError:
                         print("Invalid Input.")
                         return start_program('')
                 else:
                     try:
-                        number = int(lead) ** int(trail)
+                        exp_list, core_cnt = exponents(int(head), int(tail))
+                        exp = initialize_exp(exp_list, core_cnt)
+                        number = exp
                         mp.dps = len(str(number + 8))
                     except ValueError:
                         print("Invalid Input.")
