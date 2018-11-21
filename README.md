@@ -62,4 +62,4 @@ Do you want to calculate if another number is Prime? (y/n): y
 Enter number for Prime test: 2^1257787-1
 Calculating...
 ```
-The first input was an instantaneous result. The second input is a Large Mersenne Prime. The code keeps calculating and this way we can have more faith it is Prime. (2^1257787-1) is definitly a Prime according to Wolfram Alpha.
+The first input was an instantaneous result. The second input is a Large Mersenne Prime. The code keeps calculating. This way we can have more faith that certain numbers are Prime without a full rigorous computation.
