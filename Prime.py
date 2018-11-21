@@ -55,11 +55,13 @@ def prime_multiprocess(n, s, q, t, c, p):
         return q.put(1)
 
 
-def segregate(num):
+def segregate(num, precision):
+    mp.dps = precision
+    print(num)
     cores = processor_cnt
     if num <= processor_cnt:
         cores = int(num) - 1
-    num_mod = mp.fmod(int(num), cores)
+    num_mod = mp.fmod(num, cores)
     num_mods = [1 for _ in mp.arange(num_mod)]
     while len(num_mods) < cores:
         num_mods.append(0)
@@ -73,6 +75,7 @@ def segregate(num):
         place += (num_divs[seg])
         num_seg.append(place)
         seg += 1
+    print(num_seg)
     return num_seg, cores
 
 
@@ -88,6 +91,7 @@ def initialize(numb_seg, cores, number, precision):
             n_list[s][ss] = numb_seg[s]
             n_list[s][ss - 1] = numb_seg[s - 1] + 1
     n_list[0][0] = mp.mpf(1)
+    print(n_list)
     arg_list = [(n_list[args], sync, q_list[args], t_list[0], cores, precision) for args in range(cores)]
     processes = [multiprocessing.Process(target=prime_multiprocess, args=arg_list[args]) for args in range(cores)]
     for p in processes:
@@ -146,14 +150,14 @@ if __name__ == '__main__':
 
 
     def start_program(another):
-        s_n = 0
         single = input('Do you want to calculate if a' + str(another) + ' number is Prime? (y/n): ')
         if single.startswith(str('y')) or single.startswith(str('Y')):
             number = input('Enter number for Prime test: ')
+            if number == '1':
+                print("The number 1 is not considered Prime because it is a square of which all are not Prime.")
+                return start_program('')
             print('\r' + 'Initializing.', end='')
-            if number.__contains__('e'):
-                s_n = 1
-            elif number.__contains__('^'):
+            if number.__contains__('^'):
                 add, sub = 0, 0
                 exp = number.find('^')
                 if number.__contains__('-'):
@@ -189,27 +193,17 @@ if __name__ == '__main__':
                         print("Invalid Input.")
                         return start_program('')
             try:
-                if s_n == 1:
-                    number = mp.mpf(number)
-                else:
-                    number = int(number)
+                precision = len(str(number)) + 8
+                number = int(number)
+                print(number)
+                print('\r' + 'Initializing..', end='')
+                num_segments, num_cores = segregate(number, precision)
+                print('\r' + 'Initializing...', end='')
+                initialize(num_segments, num_cores, number, precision)
             except ValueError:
                 print("Invalid Input.")
                 return start_program('')
-            if s_n == 1:
-                number = int(number)
-                precision = len(str(number + 10))
-                number = mp.mpf(number)
-            else:
-                number = int(number)
-                precision = len(str(number + 10))
-            if number == mp.mpf(1):
-                print("The number 1 is not considered Prime because it is a square of which all are not Prime.")
-            else:
-                print('\r' + 'Initializing..', end='')
-                num_segments, num_cores = segregate(number)
-                print('\r' + 'Initializing...', end='')
-                initialize(num_segments, num_cores, number, precision)
+
         elif single.startswith(str('n')) or single.startswith(str('N')):
             print("Program Exit.")
             os.system('cmd /k'), sys.exit()
