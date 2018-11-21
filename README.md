@@ -43,7 +43,7 @@ This means that if the number is Prime, the processes will be running much longe
 With this method it is possible to make good predictions of large Mersenne Primes without too much computing. 
 Any number entered that is not Prime will return within a few seconds because of the way the algorithm works.
 The more threads your system has, the more certainty given to a Prime prediction without a full computation. 
-Fish for a Prime by inspecting the number from multiple vantage points simultaneously.
+Fish for a Prime by inspecting a number from multiple vantage points simultaneously.
 (I am working on a Cuda Version) Do you like fried Cuda Prime? 🐠
 ```
 The code also accepts scientific notation input:
