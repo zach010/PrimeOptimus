@@ -62,4 +62,4 @@ Do you want to calculate if another number is Prime? (y/n): y
 Enter number for Prime test: 2^1257787-1
 Calculating...
 ```
-Not including the initialization step, the first input was an instantaneous result. The second input is a Large Mersenne Prime. The code keeps calculating it. This way we can predict certain numbers are Prime without a super computer.
+Not including the initialization step, the first input was an instantaneous result. The second input is a Large Mersenne Prime. The code keeps calculating it. This way we can predict certain numbers are Prime without crazy levels of computations.
