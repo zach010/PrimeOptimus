@@ -3,7 +3,6 @@ import sys
 import os
 import struct
 import time
-import math
 from mpmath import mp
 import multiprocessing
 
@@ -96,22 +95,23 @@ def initialize(numb_seg, cores, number, precision):
                 if sum(sps) >= cores:
                     run = 0
     stop_t = time.time()
-    t_sum = stop_t - start_t
+    t = stop_t - start_t
     number_len = len(str(number))
-    if t_sum < 60:
-        print("\rFinished processing in %.1f seconds." % t_sum)
+    if t < 60:
+        print("\rFinished processing in %.1f seconds." % t)
         if sum(data) == cores:
             print("Number: " + str(number) + "\nPrime: Yes\nLength: " + str(number_len))
         else:
             print("Number: " + str(number) + "\nPrime: No\nLength: " + str(number_len))
-    if t_sum >= 60:
-        t_num = t_sum / 60
-        t_dec = format((t_num - math.floor(t_num)) * 60, '.3g')
-        t_min = 'minute'
-        if (t_sum / 60) >= 2:
-            t_min = 'minutes'
-        print("\rFinished processing in %.0f " % t_num,
-              end=""), print("" + t_min + " and " + t_dec + " seconds.")
+    if t >= 60:
+        s, m = t, 0
+        while s >= 60:
+            s, m = s - 60, m + 1
+        t_str = 'minute'
+        if m > 1:
+            t_str = 'minutes'
+        print("\rFinished processing in %.0f " % m, end="")
+        print("" + t_str + " and %.1f seconds." % s)
         if sum(data) == cores:
             print("Number: " + str(number) + "\nPrime: Yes\nLength: " + str(number_len))
         else:
