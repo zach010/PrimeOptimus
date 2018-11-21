@@ -46,24 +46,6 @@ The more threads your system has, the more certainty given to a Prime prediction
 Fish for a Prime by inspecting a number from multiple vantage points simultaneously.
 (I am working on a Cuda Version) Do you like fried Cuda Prime? 🐠
 ```
-The code also accepts scientific notation input:
-```
-Sample Output:
-```
-Python version 3.7.1 (64-bit)
-
-This computer-system has (8) logical processors initialized for this Prime task.
-Do you want to calculate if a number is Prime? (y/n): y
-Enter number for Prime test: 1.0e+100
-Calculating...
-Finished processing in 0.4 seconds.
-Number: 1.0e+100
-Prime: No
-Length: 101
-Do you want to calculate if another number is Prime? (y/n): 
-```
-With larger numbers the initialization takes quite a while because that part is not using parallel processing. Edit: I decreased the initialization time quite a bit for larger numbers.
-```
 Python version 3.7.1 (64-bit)
 
 This computer-system has (8) logical processors initialized for this Prime task.
