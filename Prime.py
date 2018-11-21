@@ -21,14 +21,11 @@ def progress_bar(total, progress):
     return
 
 
-def prime_multiprocess(n, q, p):
-    const = int(n[2])
+def prime_multiprocess(n, q, p, c):
+    const = int(c)
     mp.dps = p + 4
-    ia = int(mp.floor(mp.sqrt(n[0])))
-    ib = int(mp.floor(mp.sqrt(n[1])) + 1)
-    ic = int(mp.floor(mp.sqrt(n[2])) + 1)
-    iz = 0
-    for i in range(ia, ic):
+    ia, ib, ic, iz = int(n[0]), int(n[1]), int(n[2]), 0
+    for i in range(ia, ic, 1):
         if const % i == 0:
             iz += 1
             if iz > 1:
@@ -40,9 +37,10 @@ def prime_multiprocess(n, q, p):
 
 def segregate(num, precision):
     mp.dps = precision
+    num = int(mp.floor(mp.sqrt(num)) + 1)
     cores = processor_cnt
     if num <= processor_cnt:
-        cores = int(num) - 1
+        cores = num - 1
     num_mod = mp.fmod(num, cores)
     num_mods = [1 for _ in mp.arange(num_mod)]
     while len(num_mods) < cores:
@@ -63,14 +61,16 @@ def segregate(num, precision):
 def initialize(numb_seg, cores, number, precision):
     q_list = [(multiprocessing.Queue()) for _ in range(cores)]
     n_list = [[0 for _ in range(3)] for _ in range(cores)]
-    mpf_number = mp.mpf(number)
+
+    mpf_number = mp.floor(mp.sqrt(mp.mpf(number))) + 1
+    const = mp.mpf(number)
     for s in range(cores):
         for ss in range(1, 2):
             n_list[s][ss+1] = mpf_number
             n_list[s][ss] = numb_seg[s]
             n_list[s][ss - 1] = numb_seg[s - 1] + 1
     n_list[0][0] = mp.mpf(1)
-    arg_list = [(n_list[args], q_list[args], precision) for args in range(cores)]
+    arg_list = [(n_list[args], q_list[args], precision, const) for args in range(cores)]
     processes = [multiprocessing.Process(target=prime_multiprocess, args=arg_list[args]) for args in range(cores)]
     for p in processes:
         p.daemon = True
