@@ -45,7 +45,7 @@ Any number entered that is not Prime will return within a few seconds because of
 The more threads your system has, a number will get a broader spectrum of parallel sampling spread across its 
 domain giving even more strength to a Prime prediction without need for full a computation. 
 Fish for a Prime by inspecting the number from multiple vantage points simultaneously.
-(I am working on a Cuda Version) Do you like fried Cuda?
+(I am working on a Cuda Version) Do you like fried Cuda Prime?
 ```
 The code also accepts scientific notation input:
 ```
