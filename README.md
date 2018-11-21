@@ -62,7 +62,7 @@ Prime: No
 Length: 101
 Do you want to calculate if another number is Prime? (y/n): 
 ```
-With larger numbers the initialization takes quite a while because that part is not using parallel processing. Edit: I added parallel processing to the exponent calculations and decreased the initialization time quite a bit for larger numbers.
+With larger numbers the initialization takes quite a while because that part is not using parallel processing. Edit: I decreased the initialization time quite a bit for larger numbers.
 ```
 Python version 3.7.1 (64-bit)
 
