@@ -22,8 +22,7 @@ def progress_bar(total, progress):
 
 
 def prime_multiprocess(n, q, p, c):
-    const = int(c)
-    mp.dps = p + 4
+    const, mp.dps = int(c), p + 4
     ia, ib, ic, iz = int(n[0]), int(n[1]), int(n[2]), 0
     for i in range(ia, ic, 1):
         if const % i == 0:
