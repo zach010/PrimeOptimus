@@ -6,7 +6,6 @@ import time
 import math
 from mpmath import mp
 import multiprocessing
-from multiprocessing import Barrier
 
 
 def progress_bar(total, progress):
@@ -23,21 +22,20 @@ def progress_bar(total, progress):
     return
 
 
-def prime_multiprocess(n, s, q, p):
-    s.wait()
+def prime_multiprocess(n, q, p):
     const = int(n[2])
     mp.dps = p + 4
     ia = int(mp.floor(mp.sqrt(n[0])))
     ib = int(mp.floor(mp.sqrt(n[1])) + 1)
     ic = int(mp.floor(mp.sqrt(n[2])) + 1)
-    ix, iz = 0, 0
+    iz = 0
     for i in range(ia, ic):
         if const % i == 0:
             iz += 1
             if iz > 1:
                 return q.put(0)
-        if i > ib and iz < 2:
-            return q.put(1)
+        if i > ib:
+            break
     return q.put(1)
 
 
@@ -64,7 +62,6 @@ def segregate(num, precision):
 
 
 def initialize(numb_seg, cores, number, precision):
-    sync = Barrier(cores)
     q_list = [(multiprocessing.Queue()) for _ in range(cores)]
     n_list = [[0 for _ in range(3)] for _ in range(cores)]
     mpf_number = mp.mpf(number)
@@ -74,7 +71,7 @@ def initialize(numb_seg, cores, number, precision):
             n_list[s][ss] = numb_seg[s]
             n_list[s][ss - 1] = numb_seg[s - 1] + 1
     n_list[0][0] = mp.mpf(1)
-    arg_list = [(n_list[args], sync, q_list[args], precision) for args in range(cores)]
+    arg_list = [(n_list[args], q_list[args], precision) for args in range(cores)]
     processes = [multiprocessing.Process(target=prime_multiprocess, args=arg_list[args]) for args in range(cores)]
     for p in processes:
         p.daemon = True
@@ -100,13 +97,13 @@ def initialize(numb_seg, cores, number, precision):
                     run = 0
     stop_t = time.time()
     t_sum = stop_t - start_t
-    number_len = str(len(str(int(number))))
+    number_len = len(str(number))
     if t_sum < 60:
         print("\rFinished processing in %.1f seconds." % t_sum)
         if sum(data) == cores:
-            print("Number: " + str(number) + "\nPrime: Yes\nLength: " + number_len)
+            print("Number: " + str(number) + "\nPrime: Yes\nLength: " + str(number_len))
         else:
-            print("Number: " + str(number) + "\nPrime: No\nLength: " + number_len)
+            print("Number: " + str(number) + "\nPrime: No\nLength: " + str(number_len))
     if t_sum >= 60:
         t_num = t_sum / 60
         t_dec = format((t_num - math.floor(t_num)) * 60, '.3g')
@@ -116,9 +113,9 @@ def initialize(numb_seg, cores, number, precision):
         print("\rFinished processing in %.0f " % t_num,
               end=""), print("" + t_min + " and " + t_dec + " seconds.")
         if sum(data) == cores:
-            print("Number: " + str(number) + "\nPrime: Yes\nLength: " + number_len)
+            print("Number: " + str(number) + "\nPrime: Yes\nLength: " + str(number_len))
         else:
-            print("Number: " + str(number) + "\nPrime: No\nLength: " + number_len)
+            print("Number: " + str(number) + "\nPrime: No\nLength: " + str(number_len))
     return start_program('nother')
 
 
