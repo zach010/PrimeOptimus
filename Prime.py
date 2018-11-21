@@ -88,7 +88,6 @@ def initialize(numb_seg, cores, number, precision):
                 if sum(data) == cores:
                     run = 0
             if tps == 1:
-
                 for tp in range(cores):
                     processes[tp].terminate()
                     sps.append(1)
