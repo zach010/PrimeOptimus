@@ -18,8 +18,8 @@ Enter the number for a Prime check : 2^61-1
 Calculating...  
 Progress: ►■■■■■■■■■■◄ 10/10 
 Finished processing in 2 minutes and 29.7 seconds.
-Number: 2305843009213693951.0
-Prime: Yes.
+Number: 2305843009213693951
+Prime: Yes
 Length: 19
 Do you want to calculate if another number is Prime? (y/n): 
 ```
@@ -32,8 +32,8 @@ Do you want to calculate if a number is Prime? (y/n): y
 Enter the number for a Prime check : 2^61+1
 Calculating...  
 Finished processing in 0.4 seconds.
-Number: 2305843009213693953.0
-Prime: No.
+Number: 2305843009213693953
+Prime: No
 Length: 19
 Do you want to calculate if another number is Prime? (y/n): 
 ```
