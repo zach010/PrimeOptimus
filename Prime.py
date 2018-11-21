@@ -23,7 +23,7 @@ def progress_bar(total, progress):
     return
 
 
-def prime_multiprocess(n, s, q, t, c, p):
+def prime_multiprocess(n, s, q, p):
     s.wait()
     const = int(n[2])
     mp.dps = p + 4
@@ -31,28 +31,14 @@ def prime_multiprocess(n, s, q, t, c, p):
     ib = int(mp.floor(mp.sqrt(n[1])) + 1)
     ic = int(mp.floor(mp.sqrt(n[2])) + 1)
     ix, iz = 0, 0
-    ld = int((mp.mpf(ib) / mp.mpf(c)) + 1)
-    if ia == 1:
-        for i in range(ia, ic):
-            if const % i == 0:
-                iz += 1
-                if iz > 1:
-                    return q.put(0)
-            if i > ib and iz < 2:
-                return q.put(1)
-            if i % ld == 0:
-                ix += 1
-                t.put(ix)
-        return q.put(1)
-    else:
-        for i in range(ia, ic):
-            if const % i == 0:
-                iz += 1
-                if iz > 1:
-                    return q.put(0)
-            if i > ib and iz < 2:
-                return q.put(1)
-        return q.put(1)
+    for i in range(ia, ic):
+        if const % i == 0:
+            iz += 1
+            if iz > 1:
+                return q.put(0)
+        if i > ib and iz < 2:
+            return q.put(1)
+    return q.put(1)
 
 
 def segregate(num, precision):
@@ -89,7 +75,7 @@ def initialize(numb_seg, cores, number, precision):
             n_list[s][ss] = numb_seg[s]
             n_list[s][ss - 1] = numb_seg[s - 1] + 1
     n_list[0][0] = mp.mpf(1)
-    arg_list = [(n_list[args], sync, q_list[args], t_list[0], cores, precision) for args in range(cores)]
+    arg_list = [(n_list[args], sync, q_list[args], precision) for args in range(cores)]
     processes = [multiprocessing.Process(target=prime_multiprocess, args=arg_list[args]) for args in range(cores)]
     for p in processes:
         p.daemon = True
@@ -99,13 +85,10 @@ def initialize(numb_seg, cores, number, precision):
     run, tps, sps = 1, 0, []
     data = [0 for _ in range(cores)]
     while run == 1:
-        if not t_list[0].empty():
-            x = t_list[0].get()
-            if x <= cores:
-                progress_bar(cores, x + 1)
         for gp in range(cores):
             if not q_list[gp].empty() and tps == 0:
                 data[gp] = q_list[gp].get()
+                progress_bar(cores, sum(data))
                 if data[gp] == 0:
                     tps = 1
                 if sum(data) == cores:
