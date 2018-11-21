@@ -15,15 +15,15 @@ Python version 3.7.1 (64-bit)
 This computer-system has (8) logical processors initialized for this Prime task.
 Do you want to calculate if a number is Prime? (y/n): y
 Enter number for Prime test: 2^61-1
-Calculating...  
+Calculating...
 Progress: ►■■■■■■■■■■◄ 10/10 
-Finished processing in 2 minutes and 29.7 seconds.
+Finished processing in 1 minute and 52.4 seconds.
 Number: 2305843009213693951
 Prime: Yes
 Length: 19
 Do you want to calculate if another number is Prime? (y/n): 
 ```
-2 quintillion 305 quadrillion 843 trillion 009 billion 213 million 693 thousand 951 is a Prime number ***for certain*** because the program fully calculated all possible divisors with separate parallel processes in 2 and a half minutes. Now lets try the same number but +1:
+2 quintillion 305 quadrillion 843 trillion 009 billion 213 million 693 thousand 951 is a Prime number ***for certain*** because the program fully calculated all possible divisors with separate parallel processes in 1:52. Now lets try the same number but +1:
 ```
 Python version 3.7.1 (64-bit)
 
