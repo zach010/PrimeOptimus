@@ -3,8 +3,8 @@
 ```
 This Code requires an extra non-default Python module to run named: mpmath.
 ```
-The code takes an input from a user and splits the input into smaller (quicker to calculate) numbers
-across a group of parallel processes that is equal to the count of the logical processors on your system.
+The code takes an input from a user and splits the input into smaller chunks across a 
+group of parallel processes that is equal to the count of the logical processors on your system.
 ```
 Support for exponental equation entries of the form: x ^ y ± z
 ```
