@@ -1,4 +1,4 @@
-# Multiprocessing Prime number finder written by zachap@gmail.com Copyright 2018
+# Multiprocessing Prime number finder written by: zachap@gmail.com Copyright 2018
 import sys
 import os
 import struct
@@ -90,7 +90,6 @@ def initialize(numb_seg, cores, number):
             n_list[s][ss] = numb_seg[s]
             n_list[s][ss - 1] = numb_seg[s - 1] + 1
     n_list[0][0] = mp.mpf(1)
-    # print(n_list)
     arg_list = [(n_list[args], sync, q_list[args], t_list[0], cores) for args in range(cores)]
     processes = [multiprocessing.Process(target=prime_multiprocess, args=arg_list[args]) for args in range(cores)]
     for p in processes:
@@ -120,25 +119,26 @@ def initialize(numb_seg, cores, number):
                     run = 0
     stop_t = time.time()
     t_sum = stop_t - start_t
+    number_len = str(len(str(int(number))))
     if t_sum < 60:
-        print("\rFinished processing (" + str(number) + ") in %.1f seconds." % t_sum)
+        print("\rFinished processing in %.1f seconds." % t_sum)
         if sum(data) == cores:
-            print("The number: " + str(number) + "\nIs Prime.")
+            print("Number: " + str(number) + "\nPrime: Yes.\nLength: " + number_len)
         else:
-            print("The number: " + str(number) + "\nIs not Prime.")
+            print("Number: " + str(number) + "\nPrime: No.\nLength: " + number_len)
     if t_sum >= 60:
         t_num = t_sum / 60
         t_dec = format((t_num - math.floor(t_num)) * 60, '.3g')
         t_min = 'minute'
         if (t_sum / 60) >= 2:
             t_min = 'minutes'
-        print("\rFinished processing (" + str(number) + ") in %.0f " % t_num,
+        print("\rFinished processing in %.0f " % t_num,
               end=""), print("" + t_min + " and " + t_dec + " seconds.")
         if sum(data) == cores:
-            print("The number: " + str(number) + "\nIs Prime.")
+            print("Number: " + str(number) + "\nPrime: Yes.\nLength: " + number_len)
         else:
-            print("The number: " + str(number) + "\nIs not Prime.")
-    return start_program()
+            print("Number: " + str(number) + "\nPrime: No.\nLength: " + number_len)
+    return start_program('nother')
 
 
 if __name__ == '__main__':
@@ -147,8 +147,8 @@ if __name__ == '__main__':
     print("\nThis computer-system has (" + str(processor_cnt) + ") logical processors initialized for this Prime task.")
 
 
-    def start_program():
-        single = input('Do you want to calculate if a number is Prime? (y/n): ')
+    def start_program(another):
+        single = input('Do you want to calculate if a' + str(another) + ' number is Prime? (y/n): ')
         if single.startswith(str('y')) or single.startswith(str('Y')):
             number = input('Enter the number for a Prime check : ')
             if number.__contains__('^'):
@@ -171,32 +171,30 @@ if __name__ == '__main__':
                         mp.dps = len(str(number))
                     except ValueError:
                         print("Invalid Input.")
-                        return start_program()
+                        return start_program('')
                 elif sub > 0:
                     try:
                         number = (int(lead) ** int(trail)) - int(a_or_s)
                         mp.dps = len(str(number))
                     except ValueError:
                         print("Invalid Input.")
-                        return start_program()
+                        return start_program('')
                 else:
                     try:
                         number = int(lead) ** int(trail)
                         mp.dps = len(str(number))
                     except ValueError:
                         print("Invalid Input.")
-                        return start_program()
+                        return start_program('')
             try:
                 number = mp.mpf(number)
             except ValueError:
                 print("Invalid Input.")
-                return start_program()
+                return start_program('')
             mp.dps = len(str(number))
             number = mp.mpf(number)
             if number == mp.mpf(1):
                 print("The number 1 is not considered Prime because it is a square of which all are not Prime.")
-            elif number == mp.mpf(2):
-                print("2 is the only even Prime number. Its not square and its only divisible by 1 and itself.")
             else:
                 num_segments, num_cores = split(number)
                 initialize(num_segments, num_cores, number)
@@ -205,5 +203,5 @@ if __name__ == '__main__':
             os.system('cmd /k'), sys.exit()
         else:
             print("Invalid Input.")
-            return start_program()
-    start_program()
+            return start_program('')
+    start_program('')
