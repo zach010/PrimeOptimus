@@ -41,7 +41,7 @@ Notice the time difference with the same number + 1.
 The algorithm is smart enough to terminate when any of the parallel processes returns a divisible number.
 This means that if the number is Prime, the processes will be running much longer as it continues to search for a divisor.
 With this method it is possible to make good predictions of large Mersenne Primes without too much computing. 
-Any number entered that is not prime will return within a few seconds because of the way the algorithm works.
+Any number entered that is not Prime will return within a few seconds because of the way the algorithm works.
 Considering you run this code on a super computer, the more threads it has, the number will receive a broader spectrum 
 of parallel scans giving even more strength to a Prime prediction without need for full a computation. 
 (I am working on a Cuda Version)
