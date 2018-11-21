@@ -55,12 +55,7 @@ def prime_multiprocess(n, s, q, t, c, p):
         return q.put(1)
 
 
-def exp_multiprocess(e, q):
-    exp = e[0] ** e[1]
-    return q.put(exp)
-
-
-def split(num):
+def segregate(num):
     cores = processor_cnt
     if num <= processor_cnt:
         cores = int(num) - 1
@@ -82,18 +77,6 @@ def split(num):
         num_seg.append(place)
         seg += 1
     return num_seg, cores
-
-
-def exponents(num, exp):
-    cores = processor_cnt
-    if exp <= processor_cnt:
-        cores = int(exp)
-    exp_mod = [1 for _ in range(exp % cores)]
-    exp_div = math.floor(exp / cores)
-    exp_list = [[num, exp_div] for _ in range(cores)]
-    for e in range(len(exp_mod)):
-        exp_list[e] += exp_mod[e]
-    return exp_list, cores
 
 
 def initialize(numb_seg, cores, number, precision):
@@ -159,21 +142,6 @@ def initialize(numb_seg, cores, number, precision):
     return start_program('nother')
 
 
-def initialize_exp(exp_lst, cores):
-    q_list = [(multiprocessing.Queue()) for _ in range(cores)]
-    arg_list = [(exp_lst[arg], q_list[arg]) for arg in range(len(exp_lst))]
-    processes = [multiprocessing.Process(target=exp_multiprocess, args=arg_list[args]) for args in range(cores)]
-    for p in processes:
-        p.daemon = True
-        p.start()
-    data_q = []
-    for q in q_list:
-        data_q.append(q.get())
-    for i in range(len(data_q)-1):
-        data_q[0] *= data_q[i+1]
-    return data_q[0]
-
-
 if __name__ == '__main__':
     processor_cnt = multiprocessing.cpu_count()
     print("Python version %s.%s.%s" % sys.version_info[:3], '(' + str(8 * struct.calcsize("P")) + '-bit)')
@@ -204,33 +172,30 @@ if __name__ == '__main__':
                 a_or_s = ''.join([number[aos] for aos in range(a_s + 1, len(number))])
                 if add > 0:
                     try:
-                        exp_list, core_cnt = exponents(int(head), int(tail))
-                        exp = initialize_exp(exp_list, core_cnt)
-                        number = exp + int(a_or_s)
+                        number = (int(head) ** int(tail)) + int(a_or_s)
                         mp.dps = len(str(number + 8))
                     except ValueError:
                         print("Invalid Input.")
                         return start_program('')
                 elif sub > 0:
                     try:
-                        exp_list, core_cnt = exponents(int(head), int(tail))
-                        exp = initialize_exp(exp_list, core_cnt)
-                        number = exp - int(a_or_s)
+                        number = (int(head) ** int(tail)) - int(a_or_s)
                         mp.dps = len(str(number + 8))
                     except ValueError:
                         print("Invalid Input.")
                         return start_program('')
                 else:
                     try:
-                        exp_list, core_cnt = exponents(int(head), int(tail))
-                        exp = initialize_exp(exp_list, core_cnt)
-                        number = exp
+                        number = int(head) ** int(tail)
                         mp.dps = len(str(number + 8))
                     except ValueError:
                         print("Invalid Input.")
                         return start_program('')
             try:
-                number = mp.mpf(number)
+                if s_n == 1:
+                    number = mp.mpf(number)
+                else:
+                    number = int(number)
             except ValueError:
                 print("Invalid Input.")
                 return start_program('')
@@ -244,7 +209,7 @@ if __name__ == '__main__':
             if number == mp.mpf(1):
                 print("The number 1 is not considered Prime because it is a square of which all are not Prime.")
             else:
-                num_segments, num_cores = split(number)
+                num_segments, num_cores = segregate(number)
                 initialize(num_segments, num_cores, number, precision)
         elif single.startswith(str('n')) or single.startswith(str('N')):
             print("Program Exit.")
