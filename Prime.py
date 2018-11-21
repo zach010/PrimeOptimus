@@ -152,7 +152,7 @@ if __name__ == '__main__':
         s_n = 0
         single = input('Do you want to calculate if a' + str(another) + ' number is Prime? (y/n): ')
         if single.startswith(str('y')) or single.startswith(str('Y')):
-            number = input('Enter the number for a Prime check : ')
+            number = input('Enter number for Prime test : ')
             print('\r' + 'Initializing...', end='')
             if number.__contains__('e'):
                 s_n = 1
