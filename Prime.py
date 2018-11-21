@@ -64,14 +64,11 @@ def segregate(num):
     while len(num_mods) < cores:
         num_mods.append(0)
     num_div = mp.floor(mp.fdiv(num, cores))
-    num_divs = []
-    ip = 0
+    num_divs, ip = [], 0
     while len(num_divs) < cores:
         num_divs.append(num_div + num_mods[ip])
         ip += 1
-    num_seg = [num_divs[0]]
-    seg = 1
-    place = num_divs[0]
+    num_seg, place, seg = [num_divs[0]], num_divs[0], 1
     while len(num_seg) < cores:
         place += (num_divs[seg])
         num_seg.append(place)
@@ -153,7 +150,7 @@ if __name__ == '__main__':
         single = input('Do you want to calculate if a' + str(another) + ' number is Prime? (y/n): ')
         if single.startswith(str('y')) or single.startswith(str('Y')):
             number = input('Enter number for Prime test: ')
-            print('\r' + 'Initializing...', end='')
+            print('\r' + 'Initializing.', end='')
             if number.__contains__('e'):
                 s_n = 1
             elif number.__contains__('^'):
@@ -209,7 +206,9 @@ if __name__ == '__main__':
             if number == mp.mpf(1):
                 print("The number 1 is not considered Prime because it is a square of which all are not Prime.")
             else:
+                print('\r' + 'Initializing..', end='')
                 num_segments, num_cores = segregate(number)
+                print('\r' + 'Initializing...', end='')
                 initialize(num_segments, num_cores, number, precision)
         elif single.startswith(str('n')) or single.startswith(str('N')):
             print("Program Exit.")
