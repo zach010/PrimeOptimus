@@ -61,7 +61,6 @@ def segregate(num, precision):
 def initialize(numb_seg, cores, number, precision):
     q_list = [(multiprocessing.Queue()) for _ in range(cores)]
     n_list = [[0 for _ in range(3)] for _ in range(cores)]
-
     mpf_number = mp.floor(mp.sqrt(mp.mpf(number))) + 1
     const = mp.mpf(number)
     for s in range(cores):
