@@ -23,14 +23,14 @@ def progress_bar(total, progress):
     return
 
 
-def prime_multiprocess(n, s, q, t, c):
+def prime_multiprocess(n, s, q, t, c, p):
     s.wait()
     const = int(n[2])
+    mp.dps = p + 4
     ia = int(mp.floor(mp.sqrt(n[0])))
     ib = int(mp.floor(mp.sqrt(n[1])) + 1)
     ic = int(mp.floor(mp.sqrt(n[2])) + 1)
     ix, iz = 0, 0
-    mp.dps = len(str(ic))
     ld = int((mp.mpf(ib) / mp.mpf(c)) + 1)
     if ia == 1:
         for i in range(ia, ic):
@@ -79,7 +79,7 @@ def split(num):
     return num_seg, cores
 
 
-def initialize(numb_seg, cores, number):
+def initialize(numb_seg, cores, number, precision):
     sync = Barrier(cores)
     q_list = [(multiprocessing.Queue()) for _ in range(cores)]
     t_list = [multiprocessing.Queue()]
@@ -90,12 +90,12 @@ def initialize(numb_seg, cores, number):
             n_list[s][ss] = numb_seg[s]
             n_list[s][ss - 1] = numb_seg[s - 1] + 1
     n_list[0][0] = mp.mpf(1)
-    arg_list = [(n_list[args], sync, q_list[args], t_list[0], cores) for args in range(cores)]
+    arg_list = [(n_list[args], sync, q_list[args], t_list[0], cores, precision) for args in range(cores)]
     processes = [multiprocessing.Process(target=prime_multiprocess, args=arg_list[args]) for args in range(cores)]
     for p in processes:
         p.daemon = True
         p.start()
-    print(end=''), print('\r' + 'Calculating...  ')
+    print('\r' + 'Calculating...')
     start_t = time.time()
     run, tps, sps = 1, 0, []
     data = [0 for _ in range(cores)]
@@ -148,10 +148,14 @@ if __name__ == '__main__':
 
 
     def start_program(another):
+        s_n = 0
         single = input('Do you want to calculate if a' + str(another) + ' number is Prime? (y/n): ')
         if single.startswith(str('y')) or single.startswith(str('Y')):
             number = input('Enter the number for a Prime check : ')
-            if number.__contains__('^'):
+            print('\r' + 'Initializing...', end='')
+            if number.__contains__('e'):
+                s_n = 1
+            elif number.__contains__('^'):
                 add, sub = 0, 0
                 exp = number.find('^')
                 if number.__contains__('-'):
@@ -168,21 +172,21 @@ if __name__ == '__main__':
                 if add > 0:
                     try:
                         number = (int(lead) ** int(trail)) + int(a_or_s)
-                        mp.dps = len(str(number))
+                        mp.dps = len(str(number + 8))
                     except ValueError:
                         print("Invalid Input.")
                         return start_program('')
                 elif sub > 0:
                     try:
                         number = (int(lead) ** int(trail)) - int(a_or_s)
-                        mp.dps = len(str(number))
+                        mp.dps = len(str(number + 8))
                     except ValueError:
                         print("Invalid Input.")
                         return start_program('')
                 else:
                     try:
                         number = int(lead) ** int(trail)
-                        mp.dps = len(str(number))
+                        mp.dps = len(str(number + 8))
                     except ValueError:
                         print("Invalid Input.")
                         return start_program('')
@@ -191,13 +195,18 @@ if __name__ == '__main__':
             except ValueError:
                 print("Invalid Input.")
                 return start_program('')
-            mp.dps = len(str(number))
-            number = mp.mpf(number)
+            if s_n == 1:
+                number = int(number)
+                precision = len(str(number + 10))
+                number = mp.mpf(number)
+            else:
+                number = int(number)
+                precision = len(str(number + 10))
             if number == mp.mpf(1):
                 print("The number 1 is not considered Prime because it is a square of which all are not Prime.")
             else:
                 num_segments, num_cores = split(number)
-                initialize(num_segments, num_cores, number)
+                initialize(num_segments, num_cores, number, precision)
         elif single.startswith(str('n')) or single.startswith(str('N')):
             print("Program Exit.")
             os.system('cmd /k'), sys.exit()
