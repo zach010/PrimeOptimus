@@ -171,24 +171,18 @@ if __name__ == '__main__':
                 if add > 0:
                     try:
                         number = (int(head) ** int(tail)) + int(a_or_s)
-                        mp.dps = len(str(number + 8))
                     except ValueError:
-                        print("Invalid Input.")
-                        return start_program('')
+                        return print("Invalid Input."), start_program('')
                 elif sub > 0:
                     try:
                         number = (int(head) ** int(tail)) - int(a_or_s)
-                        mp.dps = len(str(number + 8))
                     except ValueError:
-                        print("Invalid Input.")
-                        return start_program('')
+                        return print("Invalid Input."), start_program('')
                 else:
                     try:
                         number = int(head) ** int(tail)
-                        mp.dps = len(str(number + 8))
                     except ValueError:
-                        print("Invalid Input.")
-                        return start_program('')
+                        return print("Invalid Input."), start_program('')
             try:
                 precision = len(str(number)) + 8
                 number = int(number)
@@ -199,7 +193,6 @@ if __name__ == '__main__':
             except ValueError:
                 print("Invalid Input.")
                 return start_program('')
-
         elif single.startswith(str('n')) or single.startswith(str('N')):
             print("Program Exit.")
             os.system('cmd /k'), sys.exit()
