@@ -57,7 +57,6 @@ def prime_multiprocess(n, s, q, t, c, p):
 
 def segregate(num, precision):
     mp.dps = precision
-    print(num)
     cores = processor_cnt
     if num <= processor_cnt:
         cores = int(num) - 1
@@ -75,7 +74,6 @@ def segregate(num, precision):
         place += (num_divs[seg])
         num_seg.append(place)
         seg += 1
-    print(num_seg)
     return num_seg, cores
 
 
@@ -91,7 +89,6 @@ def initialize(numb_seg, cores, number, precision):
             n_list[s][ss] = numb_seg[s]
             n_list[s][ss - 1] = numb_seg[s - 1] + 1
     n_list[0][0] = mp.mpf(1)
-    print(n_list)
     arg_list = [(n_list[args], sync, q_list[args], t_list[0], cores, precision) for args in range(cores)]
     processes = [multiprocessing.Process(target=prime_multiprocess, args=arg_list[args]) for args in range(cores)]
     for p in processes:
@@ -195,7 +192,6 @@ if __name__ == '__main__':
             try:
                 precision = len(str(number)) + 8
                 number = int(number)
-                print(number)
                 print('\r' + 'Initializing..', end='')
                 num_segments, num_cores = segregate(number, precision)
                 print('\r' + 'Initializing...', end='')
