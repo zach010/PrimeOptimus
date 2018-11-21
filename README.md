@@ -44,7 +44,7 @@ With this method it is possible to make good predictions of large Mersenne Prime
 Any number entered that is not Prime will return within a few seconds because of the way the algorithm works.
 The more threads your system has, the more strength given to a Prime prediction without a full computation. 
 Fish for a Prime by inspecting the number from multiple vantage points simultaneously.
-(I am working on a Cuda Version) Do you like fried Cuda Prime?
+(I am working on a Cuda Version) Do you like fried Cuda Prime? 🐠
 ```
 The code also accepts scientific notation input:
 ```
