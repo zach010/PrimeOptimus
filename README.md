@@ -6,7 +6,9 @@ This code requires an extra non-default Python module to run named: mpmath.
 The code takes an input from a user and splits the input into smaller chunks across a 
 group of parallel processes that is equal to the count of the logical processors on your system.
 ```
-Support for exponental equation entries of the form: x ^ y ± z
+Support for exponental equation entry examples: 
+2**31-1
+(2**2 + 1)**2-2
 ```
 Example output as a test for a Mersenne Prime that is a power of 2 minus 1:
 ```
@@ -14,7 +16,7 @@ Python version 3.7.1 (64-bit)
 
 This computer-system has (8) logical processors initialized for this Prime task.
 Do you want to calculate if a number is Prime? (y/n): y
-Enter number for Prime test: 2^61-1
+Enter number for Prime test: 2**61-1
 Calculating...
 Progress: ►■■■■■■■■■■◄ 10/10 
 Finished processing in 1 minute and 21.0 seconds.
@@ -29,7 +31,7 @@ Python version 3.7.1 (64-bit)
 
 This computer-system has (8) logical processors initialized for this Prime task.
 Do you want to calculate if a number is Prime? (y/n): y
-Enter number for Prime test: 2^61+1
+Enter number for Prime test: 2**61+1
 Calculating...  
 Progress: ►■■■■■■■■■■◄ 10/10 
 Finished processing in 0.3 seconds.
@@ -44,7 +46,7 @@ Python version 3.7.1 (64-bit)
 
 This computer-system has (8) logical processors initialized for this Prime task.
 Do you want to calculate if a number is Prime? (y/n): y
-Enter number for Prime test: 2^1257787
+Enter number for Prime test: 2**1257787
 Calculating...
 Progress: ►■■■■■■■■■■◄ 10/10
 Finished processing in 0.0 seconds.
