@@ -24,7 +24,7 @@ def progress_bar(total, progress):
 def prime_multiprocess(n, q, p, c):
     const, mp.dps = int(c), p + 4
     ia, ib, ic, iz = int(n[0]), int(n[1]), int(n[2]), 0
-    for i in range(ia, ic, 1):
+    for i in range(ia, ic):
         if const % i == 0:
             iz += 1
             if iz > 1:
@@ -36,7 +36,7 @@ def prime_multiprocess(n, q, p, c):
 
 def segregate(num, precision):
     mp.dps = precision
-    num = int(mp.floor(mp.sqrt(num)) + 1)
+    num = int(mp.floor(mp.sqrt(num)) + int(num / 10))
     cores = processor_cnt
     if num <= processor_cnt:
         cores = num - 1
@@ -137,7 +137,7 @@ if __name__ == '__main__':
             except ValueError:
                 return print("Invalid Input."), start_program('')
             try:
-                precision = len(str(number)) + 8
+                precision = len(str(number)) + 4
                 number = int(number)
                 print('\r' + 'Initializing..', end='')
                 num_segments, num_cores = segregate(number, precision)
