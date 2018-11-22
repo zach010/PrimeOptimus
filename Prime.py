@@ -24,7 +24,7 @@ def progress_bar(total, progress):
 def prime_multiprocess(n, q, p, c):
     const, mp.dps = int(c), p + 4
     a, b = int(n[0]), int(n[1])
-    for i in range(a, b, 1):
+    for i in range(a, b, 2):
         if const % i == 0:
             return q.put(0)
     return q.put(1)
@@ -61,8 +61,10 @@ def initialize(numb_seg, cores, number, precision):
         for ss in range(1, 2):
             n_list[s][ss] = numb_seg[s]
             n_list[s][ss - 1] = numb_seg[s - 1]
+            if not n_list[s][0] == 2:
+                if n_list[s][0] % 2 == 0:
+                    n_list[s][0] -= 1
     n_list[0][0] = mp.mpf(2)
-    print(n_list)
     arg_list = [(n_list[args], q_list[args], precision, const) for args in range(cores)]
     processes = [multiprocessing.Process(target=prime_multiprocess, args=arg_list[args]) for args in range(cores)]
     for p in processes:
