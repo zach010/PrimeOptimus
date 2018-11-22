@@ -23,12 +23,10 @@ def progress_bar(total, progress):
 
 def prime_multiprocess(n, q, p, c):
     const, mp.dps = int(c), p + 4
-    ia, ib, ic = int(n[0]), int(n[1]), int(n[2])
-    for i in range(ia, ic, 2):
+    a, b = int(n[0]), int(n[1])
+    for i in range(a, b, 2):
         if const % i == 0:
             return q.put(0)
-        if i > ib:
-            break
     return q.put(1)
 
 
@@ -57,12 +55,10 @@ def segregate(num, precision):
 
 def initialize(numb_seg, cores, number, precision):
     q_list = [(multiprocessing.Queue()) for _ in range(cores)]
-    n_list = [[0 for _ in range(3)] for _ in range(cores)]
-    mpf_number = mp.floor(mp.sqrt(mp.mpf(number))) + 1
+    n_list = [[0 for _ in range(2)] for _ in range(cores)]
     const = mp.mpf(number)
     for s in range(cores):
         for ss in range(1, 2):
-            n_list[s][ss+1] = mpf_number
             n_list[s][ss] = numb_seg[s]
             n_list[s][ss - 1] = numb_seg[s - 1]
     n_list[0][0] = mp.mpf(2)
