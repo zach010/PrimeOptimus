@@ -7,8 +7,9 @@ The code takes an input from a user and splits the input into smaller chunks acr
 group of parallel processes that is equal to the count of the logical processors on your system.
 ```
 Support for exponental equation entry examples: 
-2**31-1
-(2**2 + 1)**2-2
+Mersenne Prime Format: 2**31-1
+Kynea Prime Format: (2**2 + 1)**2-2
+Or any format with Pythonic syntax.
 ```
 Example output as a test for a Mersenne Prime that is a power of 2 minus 1:
 ```
