@@ -131,36 +131,11 @@ if __name__ == '__main__':
             if number == '1':
                 print("The number 1 is not considered Prime because it is a square of which all are not Prime.")
                 return start_program('')
-            print('\r' + 'Initializing.', end='')
-            if number.__contains__('^'):
-                add, sub = 0, 0
-                exp = number.find('^')
-                if number.__contains__('-'):
-                    sub = number.find('-')
-                    a_s = number.find('-')
-                elif number.__contains__('+'):
-                    add = number.find('+')
-                    a_s = number.find('+')
-                else:
-                    a_s = len(number)
-                head = ''.join([number[l] for l in range(0, exp)])
-                tail = ''.join([number[t] for t in range(exp + 1, a_s)])
-                a_or_s = ''.join([number[aos] for aos in range(a_s + 1, len(number))])
-                if add > 0:
-                    try:
-                        number = (int(head) ** int(tail)) + int(a_or_s)
-                    except ValueError:
-                        return print("Invalid Input."), start_program('')
-                elif sub > 0:
-                    try:
-                        number = (int(head) ** int(tail)) - int(a_or_s)
-                    except ValueError:
-                        return print("Invalid Input."), start_program('')
-                else:
-                    try:
-                        number = int(head) ** int(tail)
-                    except ValueError:
-                        return print("Invalid Input."), start_program('')
+            try:
+                print('\r' + 'Initializing.', end='')
+                number = eval(number)
+            except ValueError:
+                return print("Invalid Input."), start_program('')
             try:
                 precision = len(str(number)) + 8
                 number = int(number)
