@@ -58,4 +58,4 @@ Do you want to calculate if another number is Prime? (y/n): y
 Enter number for Prime test: 2**1257787-1
 Calculating...
 ```
-The second input (2**1257787-1) is a verified Large Mersenne Prime. The program will continue looking for divisors much longer than the first input. Seeing the calculation not finish as fast as the same number +1, we can predict certain numbers are Prime without massive time-consuming computations.
+The second input (2**1257787-1) is a verified Large Mersenne Prime. The program will continue looking for divisors much longer than the first input. Observing when the calculation doesn't finish as fast as n+1, we can predict certain numbers are Prime without massive time-consuming computations.
