@@ -21,11 +21,10 @@ def progress_bar(total, progress):
     return
 
 
-def prime_multiprocess(n, q, p, c):
-    const, mp.dps = int(c), p + 4
-    a, b = int(n[0]), int(n[1])
+def prime_multiprocess(n, c, q):
+    a, b, c = int(n[0]), int(n[1]), int(c)
     for i in range(a, b, 2):
-        if const % i == 0:
+        if c % i == 0:
             return q.put(0)
     return q.put(1)
 
@@ -53,7 +52,7 @@ def segregate(num, precision):
     return num_seg, cores
 
 
-def initialize(numb_seg, cores, number, precision):
+def initialize(numb_seg, cores, number):
     q_list = [(multiprocessing.Queue()) for _ in range(cores)]
     n_list = [[0 for _ in range(2)] for _ in range(cores)]
     const = mp.mpf(number)
@@ -65,7 +64,7 @@ def initialize(numb_seg, cores, number, precision):
                 if n_list[s][0] % 2 == 0:
                     n_list[s][0] -= 1
     n_list[0][0] = mp.mpf(2)
-    arg_list = [(n_list[args], q_list[args], precision, const) for args in range(cores)]
+    arg_list = [(n_list[args], const, q_list[args]) for args in range(cores)]
     processes = [multiprocessing.Process(target=prime_multiprocess, args=arg_list[args]) for args in range(cores)]
     for p in processes:
         p.daemon = True
@@ -138,7 +137,7 @@ if __name__ == '__main__':
                 print('\r' + 'Initializing..', end='')
                 num_segments, num_cores = segregate(number, precision)
                 print('\r' + 'Initializing...', end='')
-                initialize(num_segments, num_cores, number, precision)
+                initialize(num_segments, num_cores, number)
             except ValueError:
                 print("Invalid Input.")
                 return start_program('')
