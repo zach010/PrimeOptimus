@@ -36,7 +36,6 @@ def prime_multiprocess(n, q, p, c):
 
 def segregate(num, precision):
     mp.dps = precision
-    num = int(mp.floor(mp.sqrt(num)) + int(num / 10))
     cores = processor_cnt
     if num <= processor_cnt:
         cores = num - 1
@@ -60,7 +59,7 @@ def segregate(num, precision):
 def initialize(numb_seg, cores, number, precision):
     q_list = [(multiprocessing.Queue()) for _ in range(cores)]
     n_list = [[0 for _ in range(3)] for _ in range(cores)]
-    mpf_number = mp.floor(mp.sqrt(mp.mpf(number))) + 1
+    mpf_number = mp.mpf(number)
     const = mp.mpf(number)
     for s in range(cores):
         for ss in range(1, 2):
