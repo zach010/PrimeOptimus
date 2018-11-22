@@ -55,7 +55,7 @@ Number: 412245773621428674725323218466978960052787185654659469380413204895804055
 Prime: No
 Length: 378632
 Do you want to calculate if another number is Prime? (y/n): y
-Enter number for Prime test: 2^1257787-1
+Enter number for Prime test: 2**1257787-1
 Calculating...
 ```
 Not including the initialization step, the first input was an instantaneous result. The second input is a Large Mersenne Prime. The code keeps calculating it. This way we can predict certain numbers are Prime without crazy levels of computations.
