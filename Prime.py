@@ -24,7 +24,7 @@ def progress_bar(total, progress):
 def prime_multiprocess(n, q, p, c):
     const, mp.dps = int(c), p + 4
     ia, ib, ic = int(n[0]), int(n[1]), int(n[2])
-    for i in range(ia, ic):
+    for i in range(ia, ic, 2):
         if const % i == 0:
             return q.put(0)
         if i > ib:
@@ -64,7 +64,7 @@ def initialize(numb_seg, cores, number, precision):
         for ss in range(1, 2):
             n_list[s][ss+1] = mpf_number
             n_list[s][ss] = numb_seg[s]
-            n_list[s][ss - 1] = numb_seg[s - 1] + 1
+            n_list[s][ss - 1] = numb_seg[s - 1]
     n_list[0][0] = mp.mpf(2)
     arg_list = [(n_list[args], q_list[args], precision, const) for args in range(cores)]
     processes = [multiprocessing.Process(target=prime_multiprocess, args=arg_list[args]) for args in range(cores)]
@@ -107,8 +107,7 @@ def initialize(numb_seg, cores, number, precision):
         t_str = 'minute'
         if m > 1:
             t_str = 'minutes'
-        print("\rFinished processing in %.0f " % m, end="")
-        print("" + t_str + " and %.1f seconds." % s)
+        print("\rFinished processing in %.0f " % m, end=""), print("" + t_str + " and %.1f seconds." % s)
         if sum(data) == cores:
             print("Number: " + str(number) + "\nPrime: Yes\nLength: " + str(number_len))
         else:
@@ -132,8 +131,8 @@ if __name__ == '__main__':
             try:
                 print('\r' + 'Initializing.', end='')
                 number = eval(number)
-            except ValueError:
-                return print("Invalid Input."), start_program('')
+            except (SyntaxError, NameError, ValueError):
+                return print("\rInvalid Input."), start_program('')
             try:
                 precision = len(str(number)) + 4
                 number = int(number)
@@ -145,8 +144,7 @@ if __name__ == '__main__':
                 print("Invalid Input.")
                 return start_program('')
         elif single.startswith(str('n')) or single.startswith(str('N')):
-            print("Program Exit.")
-            os.system('cmd /k'), sys.exit()
+            print("Program Exit."), os.system('cmd /k'), sys.exit()
         else:
             print("Invalid Input.")
             return start_program('')
