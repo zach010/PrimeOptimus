@@ -67,7 +67,6 @@ def initialize(numb_seg, cores, number):
     n_list[0][0] = 2
     arg_list = [(n_list[args], const, q_list[args]) for args in range(cores)]
     processes = [multiprocessing.Process(target=prime_multiprocess, args=arg_list[args]) for args in range(cores)]
-    print("here")
     for p in processes:
         p.daemon = True
         p.start()
