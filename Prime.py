@@ -22,7 +22,7 @@ def progress_bar(total, progress):
 
 
 def prime_multiprocess(n, c, q):
-    a, b, c = int(n[0]), int(n[1]), int(c)
+    a, b, c = n[0], n[1], c
     for i in range(a, b, 2):
         if c % i == 0:
             return q.put(0)
@@ -49,13 +49,14 @@ def segregate(num, precision):
         place += (num_divs[seg])
         num_seg.append(place)
         seg += 1
+    num_seg = [int(num_seg[i]) for i in range(len(num_seg))]
     return num_seg, cores
 
 
 def initialize(numb_seg, cores, number):
     q_list = [(multiprocessing.Queue()) for _ in range(cores)]
     n_list = [[0 for _ in range(2)] for _ in range(cores)]
-    const = mp.mpf(number)
+    const = number
     for s in range(cores):
         for ss in range(1, 2):
             n_list[s][ss] = numb_seg[s]
@@ -63,9 +64,10 @@ def initialize(numb_seg, cores, number):
             if not n_list[s][0] == 2:
                 if n_list[s][0] % 2 == 0:
                     n_list[s][0] -= 1
-    n_list[0][0] = mp.mpf(2)
+    n_list[0][0] = 2
     arg_list = [(n_list[args], const, q_list[args]) for args in range(cores)]
     processes = [multiprocessing.Process(target=prime_multiprocess, args=arg_list[args]) for args in range(cores)]
+    print("here")
     for p in processes:
         p.daemon = True
         p.start()
@@ -120,8 +122,8 @@ if __name__ == '__main__':
 
 
     def start_program(another):
-        single = input('Do you want to calculate if a' + str(another) + ' number is Prime? (y/n): ')
-        if single.startswith(str('y')) or single.startswith(str('Y')):
+        question = input('Do you want to calculate if a' + str(another) + ' number is Prime? (y/n): ')
+        if question.startswith(str('y')) or question.startswith(str('Y')):
             number = input('Enter number for Prime test: ')
             if number == '1':
                 print("The number 1 is not considered Prime because it is a square of which all are not Prime.")
@@ -141,7 +143,7 @@ if __name__ == '__main__':
             except ValueError:
                 print("Invalid Input.")
                 return start_program('')
-        elif single.startswith(str('n')) or single.startswith(str('N')):
+        elif question.startswith(str('n')) or question.startswith(str('N')):
             print("Program Exit."), os.system('cmd /k'), sys.exit()
         else:
             print("Invalid Input.")
