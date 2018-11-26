@@ -13,9 +13,9 @@ def progress_bar(total, progress):
     if progress >= 1.:
         progress, status = 1, "\r\n"
     block = int(round(bar_length * progress))
-    text = "\rProgress: ►{}◄ {:.0f}/10 {}".format(
-        "■" * block + "□" * (bar_length - block), round(progress * 10, 0),
-        status)
+    text = "\rProgress: [{}] {:.0f}/10 {}".format(
+        chr(9632) * block + chr(9633) * (bar_length - block),
+        round(progress * 10, 0), status)
     sys.stdout.write(text)
     sys.stdout.flush()
     return
@@ -46,7 +46,7 @@ def segregate(num, precision):
         ip += 1
     num_seg, place, seg = [num_divs[0]], num_divs[0], 1
     while len(num_seg) < cores:
-        place += (num_divs[seg])
+        place += num_divs[seg]
         num_seg.append(place)
         seg += 1
     num_seg = [int(num_seg[i]) for i in range(len(num_seg))]
@@ -77,7 +77,7 @@ def initialize(numb_seg, cores, number):
                 data[gp] = q_list[gp].get()
                 progress_bar(cores, sum(data)), print(end='')
                 if data[gp] == 0:
-                    print('\rProgress: ►■■■■■■■■■■◄ 10/10')
+                    print('\rProgress: [' + chr(9632) * 10 + '] 10/10')
                     tps = 1
                 if sum(data) == cores:
                     run = 0
