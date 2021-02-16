@@ -91,3 +91,8 @@ This program only confirms Mersenne Primes though.
 The genius is in the algorithm of which I did not find myself. I only rewrote it.
 I have attempted to make it parralel processing, but all attempts have only made it slower since
 each iteration is based on a previous unknown modulus that cannot be set up very efficiently in python.
+This website shows all Mersenne Primes that have been proven:
+https://www.mersenne.org/primes/
+(2^44497)-1 is listed.
+I would rather use my own program to find prime numbers because I know how it works and I when their program runs on your computer when you reach 99% complete with this algorithm, they could easily upload your current modulus and take the find from you.
+
