@@ -4,7 +4,7 @@
 This code requires an extra non-default Python module to run named: mpmath.
 ```
 Prime.py takes an input from a user and splits the input into smaller chunks across a 
-group of parallel processes that is equal to the count of the logical processors on your system.
+group of parallel processes that is equal to the total logical processors in your system.
 ```
 Support for exponental equation entry examples: 
 Mersenne Prime Format: 2**x-1
