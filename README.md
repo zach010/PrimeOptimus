@@ -3,7 +3,7 @@
 ```
 This code requires an extra non-default Python module to run named: mpmath.
 ```
-The code takes an input from a user and splits the input into smaller chunks across a 
+Prime.py takes an input from a user and splits the input into smaller chunks across a 
 group of parallel processes that is equal to the count of the logical processors on your system.
 ```
 Support for exponental equation entry examples: 
@@ -43,7 +43,7 @@ Do you want to calculate if another number is Prime? (y/n):
 ```
 Notice the time 0.2 seconds. The input number was the same but + 1. The algorithm is smart enough to terminate when any of the parallel processes returns a divisible number. This means that if the number is Prime, the processes will be running much longer as it continues to search for a divisor. With this method it is possible to make good predictions of large Primes without too much computing. Any number entered that is not Prime will return within a few seconds because of the way the algorithm works. The more threads your system has, the more certainty given to a Prime prediction without a full computation. Fish for a Prime by inspecting a number from multiple vantage points simultaneously.
 
-Here is output from PrimeFinder:
+Here is output from PrimeFinder.py:
 ```
 Examples of prime number functions in python: 
 Kynea primes: (2**n+1)**2-2
@@ -75,3 +75,17 @@ Initializing...
 Do you want to test for probable primes?: 
 ```
 This code could be used for encryption or compression algroithms by saving data as straight math formulas.
+
+This is an output from the MersennePrime.py finder:
+```
+For Mersenne (2^n)-1 enter ƒ(n):44497
+Progress: ■■■■■■■■■■ 100% 
+(2^44497)-1
+Prime: YES.
+Length: 13395 digits.
+Overall process took: 1 minute and 47.5 seconds.
+```
+Yes it only took 1 minute and 47.5 seconds to confirm a prime number of 13395 digits long.
+The genius is in the algorithm of which I did not find myself. I only rewrote it.
+I have attempted to make it parralel processing, but all attempts have only made it slower since
+each iteration is based on a previous unknown modulus that cannot be set up very efficiently in python.
