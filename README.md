@@ -85,7 +85,8 @@ Prime: YES.
 Length: 13395 digits.
 Overall process took: 1 minute and 47.5 seconds.
 ```
-Yes it only took 1 minute and 47.5 seconds to confirm a prime number of 13395 digits long.
+Yes it only took 1 minute and 47.5 seconds to confirm a Mersenne prime number of 13395 digits long.
+This program only confirms Mersenne Primes though.
 The genius is in the algorithm of which I did not find myself. I only rewrote it.
 I have attempted to make it parralel processing, but all attempts have only made it slower since
 each iteration is based on a previous unknown modulus that cannot be set up very efficiently in python.
