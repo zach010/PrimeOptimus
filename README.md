@@ -75,7 +75,7 @@ Initializing...
 Do you want to test for probable primes?: 
 ```
 This code could be used for encryption or compression algroithms by saving data as straight math formulas.
-Tables could be created based on combinations of primes number sequences of specific formulas to define data.
+Tables could be created based on combinations of primes number sequences of specific formulas to define data since prime numbers are chaotic and unique.
 
 This is an output from the MersennePrime.py finder:
 ```
