@@ -74,4 +74,4 @@ Overall process took 1 minute and 41.3 seconds.
 Initializing...
 Do you want to test for probable primes?: 
 ```
-
+This code could be used for encryption or compression algroithms by saving data as straight math formulas.
