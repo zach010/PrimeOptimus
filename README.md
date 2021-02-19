@@ -13,14 +13,14 @@ Or any format with Pythonic syntax.
 ```
 Example output as a test for a Mersenne Prime that is a power of 2 minus 1:
 ```
-Python version 3.7.1 (64-bit)
+Python version 3.8.7 (64-bit)
 
-This computer-system has (8) logical processors initialized for this Prime task.
+This computer-system has (16) logical processors initialized for this Prime task.
 Do you want to calculate if a number is Prime? (y/n): y
-Enter number for Prime test: 2**61-1
+Enter number for Prime test: (2**61)-1
 Calculating...
 Progress: [■■■■■■■■■■] 10/10 
-Finished processing in 1 minute and 10.2 seconds.
+Finished processing in 21.6 seconds.
 Number: 2305843009213693951
 Prime: Yes
 Length: 19
@@ -28,11 +28,11 @@ Do you want to calculate if another number is Prime? (y/n):
 ```
 2 quintillion 305 quadrillion 843 trillion 009 billion 213 million 693 thousand 951 is a Prime number ***for certain*** because the program fully calculated all possible divisors with separate parallel processes in 1 minute 10 seconds. Now lets try the same number but +1:
 ```
-Python version 3.7.1 (64-bit)
+Python version 3.8.7 (64-bit)
 
-This computer-system has (8) logical processors initialized for this Prime task.
+This computer-system has (16) logical processors initialized for this Prime task.
 Do you want to calculate if a number is Prime? (y/n): y
-Enter number for Prime test: 2**61+1
+Enter number for Prime test: (2**61)+1
 Calculating...
 Progress: [■■■■■■■■■■] 10/10
 Finished processing in 0.2 seconds.
@@ -45,9 +45,19 @@ Notice the time 0.2 seconds. The input number was the same but + 1. The algorith
 
 Here is output from PrimeFinder.py:
 ```
+Python version 3.8.7  (64-bit)
+This computer-system has (16) logical processors for this prime task.
+This is a multiprocessing prime number program written by zachap@gmail.com.
+A single number will be evenly split (16) times across its domain to be sampled
+by simultaneous calculations on separate cores checking the number for factors.
+
+Initializing...
+Do you want to test for probable primes?: n
+
 Examples of prime number functions in python: 
 Kynea primes: (2**n+1)**2-2
 Mersenne primes: (2**n)-1
+Zach primes: 2*(n**2)-1
 
 Enter prime number FUNCTION:(2**n+1)**2-2
 Enter the number for 'n' START:1
@@ -70,12 +80,12 @@ Primes:
 ƒ(32) = 18446744082299486207
 Primes found: 14
 Prime at end of list has 20 digits.
-Overall process took 1 minute and 41.3 seconds.
+Overall process took 1 minute and 45.5 seconds.
 Initializing...
 Do you want to test for probable primes?: 
 ```
 This code could be used for encryption or compression algroithms by saving data as straight math formulas.
-Tables could be created based on combinations of primes number sequences of specific formulas to define data since prime numbers are chaotic and unique.
+Tables could be created based on combinations of primes number sequences of specific formulas to define data since prime numbers are chaotic and ordered.
 
 This is an output from the MersennePrime.py finder:
 ```
