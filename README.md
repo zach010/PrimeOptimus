@@ -26,7 +26,7 @@ Prime: Yes
 Length: 19
 Do you want to calculate if another number is Prime? (y/n): 
 ```
-2 quintillion 305 quadrillion 843 trillion 009 billion 213 million 693 thousand 951 is a Prime number ***for certain*** because the program fully calculated all possible divisors with separate parallel processes in 1 minute 10 seconds. Now lets try the same number but +1:
+2 quintillion 305 quadrillion 843 trillion 009 billion 213 million 693 thousand 951 is a Prime number ***for certain*** because the program fully calculated all possible divisors with separate parallel processes in 21.6 seconds. Now lets try the same number but +1:
 ```
 Python version 3.8.7 (64-bit)
 
