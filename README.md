@@ -170,7 +170,7 @@ to estimate which probable primes should be deducted from the list at the end. I
 as a helper, but it slows things down quite a bit with large numbers. This program works better on a linux system because it opens and closes 
 processes rapidly for each iteration. Windows has trouble with this. I have thought of a rewrite specially for windows using class object processes 
 that I can keep open and just pickle, but I can't figure out how to efficiently stop a set of processes from continuing resource calculation without 
-terminating them and having to reopen them.
+terminating them and having to reopen them. There must be a way to interrupt a process with new input values without the need to close and reopen it.
 
 This is an output from the MersennePrime.py finder:
 ```
