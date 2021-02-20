@@ -164,7 +164,7 @@ Potential primes:
 'Potential' prime at end of list has 119 digits.
 Overall process took 1 minute and 48.6 seconds.
 ```
-The program trimmed down a list of *probable primes* with a precision of 2^20 and found 47 possible primes out of 1-200 in the function (2^n+1)^2-2
+The program trimmed down a list of *probable primes* with a precision of 2^20 and found 47 possible primes from 1-200 in ƒ(n) = (2^n+1)^2-2
 I am working on a way to implement the Riemann Zeta function to estimate which probable primes should be deducted from the list at the end.
 The distribution of prime numbers posed by the prime number theorem will be implemented alongside prime counting functions in a later commit.
 
