@@ -84,9 +84,8 @@ Overall process took 1 minute and 45.5 seconds.
 Initializing...
 Do you want to test for probable primes?: 
 ```
-The last number ƒ(32) took a long time to modulus all numbers from 1 to 18446744082299486207 into 18446744082299486207 (18 quintillion)
-
-The program also has a "probable primes" setting:
+The last number ƒ(32) took about the same amount of time to calculate as all the previous calculations combined. 18446744082299486207 (18.44 quintillion)
+Due to my core count potential. For faster calculations beyond (with a slower computer) the program also has a "probable primes" setting:
 ```
 Python version 3.8.7  (64-bit)
 This computer-system has (16) logical processors for this prime task.
@@ -164,13 +163,9 @@ Potential primes:
 'Potential' prime at end of list has 119 digits.
 Overall process took 1 minute and 48.6 seconds.
 ```
-The program trimmed down a list of *probable primes* with a precision of 2^20 and found 47 possible primes from 1-200 in ƒ(n) = (2^n+1)^2-2
-In a future commit, the distribution of prime numbers posed by the prime number theorem will be implemented alongside prime counting functions 
-to estimate which probable primes should be deducted from the list at the end. I am also pondering a way to implement the Riemann Zeta function 
-as a helper, but it slows things down quite a bit with large numbers. This program works better on a linux system because it opens and closes 
-processes rapidly for each iteration. Windows has trouble with this. I have thought of a rewrite specially for windows using class object processes 
-that I can keep open and just pickle, but I can't figure out how to efficiently stop a set of processes from continuing resource calculation without 
-terminating them and having to reopen them. There must be a way to interrupt a process with new input values without the need to close and reopen it.
+The program trimmed down a list of *probable primes* with a precision of 2^20 and found 47 possible primes from 1-200 in ƒ(n) = (2^n+1)^2-2. In a future commit, the distribution of prime numbers posed by the prime number theorem will be implemented alongside prime counting functions to estimate which probable primes should be deducted from the list at the end. I am also pondering a way to implement the Riemann Zeta function as a helper, but it slows things down quite a bit with large numbers.
+
+This program works better on a linux system because it opens and closes processes rapidly for each iteration. Windows has trouble with this. I have thought of a rewrite specially for windows using class object processes that I can keep open and just pickle, but I can't figure out how to efficiently stop a set of processes from continuing resource calculation without terminating them and having to reopen them. There must be a way to interrupt a process with new input values without the need to close and reopen it.
 
 This is an output from the MersennePrime.py finder:
 ```
