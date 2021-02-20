@@ -165,11 +165,12 @@ Potential primes:
 Overall process took 1 minute and 48.6 seconds.
 ```
 The program trimmed down a list of *probable primes* with a precision of 2^20 and found 47 possible primes from 1-200 in ƒ(n) = (2^n+1)^2-2
-I am working on a way to implement the Riemann Zeta function to estimate which probable primes should be deducted from the list at the end.
-The distribution of prime numbers posed by the prime number theorem will be implemented alongside prime counting functions in a later commit.
-This program works better on a linux system because it opens and closes processes rapidly for each iteration. Windows has trouble with this.
-I have thought of a rewrite specially for windows using class object processes that I can keep open and just pickle, but I can't figure out 
-how to efficiently stop a set of processes from continuing resource calculation without terminating them and having to reopen them.
+In a future commit, the distribution of prime numbers posed by the prime number theorem will be implemented alongside prime counting functions 
+to estimate which probable primes should be deducted from the list at the end. I am also pondering a way to implement the Riemann Zeta function 
+as a helper, but it slows things down quite a bit with large numbers. This program works better on a linux system because it opens and closes 
+processes rapidly for each iteration. Windows has trouble with this. I have thought of a rewrite specially for windows using class object processes 
+that I can keep open and just pickle, but I can't figure out how to efficiently stop a set of processes from continuing resource calculation without 
+terminating them and having to reopen them.
 
 This is an output from the MersennePrime.py finder:
 ```
