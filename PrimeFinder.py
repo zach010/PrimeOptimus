@@ -1,4 +1,5 @@
-# Multiprocessing prime number finder written by: Zachary Alexander Pettibone
+# Multiprocessing prime number finder
+# Written by: Zachary Alexander Pettibone
 # Email: zachap@gmail.com Copyright 2020
 import sys
 import struct
@@ -14,7 +15,7 @@ def progress_bar(total, progress):
         progress, status = 1, "\r\n"
     block = int(round(bar_length * progress))
     text = "\rProgress: {}".format(
-        "■" * block + "□" * (bar_length - block), round(progress * 10, 0),
+        "#" * block + "=" * (bar_length - block), round(progress * 10, 0),
         status)
     sys.stdout.write(text)
     sys.stdout.flush()
@@ -23,6 +24,7 @@ def progress_bar(total, progress):
 
 def prime_multiprocess(n, c, q):
     a, b, c = n[0], n[1], c
+    
     for i in range(a, b):
         if c % i == 0:
             return q.put(0)
@@ -73,7 +75,6 @@ def initialize(numb_seg, cores, number, probable, t_check):
             n_list[s][ss] = numb_seg[s]
             n_list[s][ss - 1] = numb_seg[s - 1]
     n_list[0][0] = 2
-
     if probable == 0:
         arg_list = [(n_list[args], const, q_list[args]) for args in range(cores)]
         processes = [multiprocessing.Process(target=prime_multiprocess, args=arg_list[args]) for args in range(cores)]
@@ -132,7 +133,7 @@ def probability():
     if probable.startswith(str('y')) or probable.startswith(str('Y')):
         information = \
               '\nHow many loop-steps do you want a multiprocess to continue to\n' \
-              'multi-core-sample a number that has not made an immediate factor?\n' \
+              'multi-core-sample a number that has not found an immediate factor?\n' \
               'Larger numbers increase odds of finding a \'more potential\' prime.\n' \
               'Can be entered as (2**23) where (**) is raising to the exponent.\n'
         for read in information:
@@ -149,8 +150,10 @@ def probability():
             return 1, int(int(t_limit))
         except (SyntaxError, NameError, ValueError):
             return print("\rInvalid Input."), probability()
-    else:
+    if probable.startswith(str('n')) or probable.startswith(str('N')):
         return 0, 0
+    else:
+        return print("\rInvalid Input."), probability()
 
 
 if __name__ == '__main__':
@@ -164,94 +167,86 @@ if __name__ == '__main__':
 
     def start_program():
         print('\r' + 'Initializing...', end='\n')
-        potential_primes = []
+        prime_list = []
         probable, t_limit = probability()
+
         try:
             print("\nExamples of prime number functions in python: \n"
                   "Kynea primes: (2**n+1)**2-2\n"
-                  "Mersenne primes: (2**n)-1\n")
+                  "Mersenne primes: (2**n)-1\n"
+                  "Zach primes: 2*(n**2)-1\n")
             function = input('Enter prime number FUNCTION:')
-            test_function = function.replace('n', '0')
-            eval(test_function)
+            if 'n' in function:
+                eval(function.replace('n', '0'))
+            else:
+                return print("\rInvalid Input."), start_program()
             start_function = input('Enter the number for \'n\' START:')
             start_function = eval(start_function)
-            iterations = input('Enter the number of ITERATIONS:')
-            eval(iterations)
+            iterations = int(input('Enter the number of ITERATIONS:'))
             start_t = time.time()
         except (SyntaxError, NameError, ValueError):
             return print("\rInvalid Input."), start_program()
-        start_point = int(start_function)
-        check_function = function.replace('n', str(start_point))
-        while eval(check_function) <= 0:
-            start_point += 1
-            check_function = function.replace('n', '' + str(start_point) + '')
 
         if probable == 0:
-            for n in range(start_point, start_point + int(iterations)):
-                it = eval(function)
+            for n in range(start_function, iterations):
+                it = eval(function.replace('n', '' + str(n) + ''))
                 precision = len(str(it)) + 4
                 num_segments, num_cores = segregate(it, precision)
                 t_prime = initialize(num_segments, num_cores, it, probable, t_limit)
-                progress_bar((int(iterations)), n - start_point)
-                if n < 2**800:
-                    sys.stdout.write(' n=' + str(n + 1) + ' (Primes found: ' + str(len(potential_primes)) + ')')
+                progress_bar((int(iterations)), n - start_function)
+                if n < 2 ** 800:
+                    sys.stdout.write(' n=' + str(n + 1) + ' (Primes found: ' + str(len(prime_list)) + ')')
                     sys.stdout.flush()
-                if n > 2**800:
-                    sys.stdout.write(' (Primes found: ' + str(len(potential_primes)) + ')')
+                if n > 2 ** 800:
+                    sys.stdout.write(' (Primes found: ' + str(len(prime_list)) + ')')
                     sys.stdout.flush()
                 if t_prime is not None:
-                    potential_primes.append(str('ƒ(' + str(n) + ') = ' + str(t_prime) + ''))
+                    prime_list.append(str('ƒ(' + str(n) + ') = ' + str(t_prime) + ''))
+                    if prime_list[0] == 'ƒ(1) = 1':
+                        del prime_list[0]
 
         if probable == 1:
-            for n in range(start_point, start_point + int(iterations)):
-                it = eval(function)
+            for n in range(start_function, iterations):
+                it = eval(function.replace('n', '' + str(n) + ''))
                 precision = len(str(it)) + 4
                 num_segments, num_cores = segregate(it, precision)
                 t_prime = initialize(num_segments, num_cores, it, probable, t_limit)
-                progress_bar((int(iterations)), n - start_point)
-                if n < 2**800:
-                    sys.stdout.write(' n=' + str(n + 1) + ' (Potential primes found: '
-                                     + str(len(potential_primes)) + ')')
+                progress_bar((int(iterations)), n - start_function)
+                if n < 2 ** 800:
+                    sys.stdout.write(' n=' + str(n + 1) + ' (Potential primes found: ' + str(len(prime_list)) + ')')
                     sys.stdout.flush()
-                if n > 2**800:
-                    sys.stdout.write(' (Potential primes found: ' + str(len(potential_primes)) + ')')
+                if n > 2 ** 800:
+                    sys.stdout.write(' (Potential primes found: ' + str(len(prime_list)) + ')')
                     sys.stdout.flush()
                 if t_prime is not None:
-                    potential_primes.append(str('ƒ(' + str(n) + ') = ' + str(t_prime) + ''))
+                    prime_list.append(str('ƒ(' + str(n) + ') = ' + str(t_prime) + ''))
+                    if prime_list[0] == 'ƒ(1) = 1':
+                        del prime_list[0]
         stop_t = time.time()
         t = stop_t - start_t
-        # Remove number 1 in list as prime
-        if potential_primes:
-            try:
-                if potential_primes[0] == 1:
-                    del potential_primes[0]
-            except (SyntaxError, NameError, ValueError):
-                potential_primes = []
-        else:
-            potential_primes = []
 
         if probable == 0:
             progress_bar(1, 1), print(' 100%', end='')
             print('\nPrimes:')
-            if len(potential_primes) >= 1:
-                print(('\n'.join(map(str, potential_primes))))
-                if potential_primes is not None:
-                    print('Primes found: ' + str(len(potential_primes)) + '')
-                    p_len = len(potential_primes[-1]) - (potential_primes[-1].index('=') + 2)
+            if len(prime_list) >= 1:
+                print(('\n'.join(map(str, prime_list))))
+                if prime_list is not None:
+                    print('Primes found: ' + str(len(prime_list)) + '')
+                    p_len = len(prime_list[-1]) - (prime_list[-1].index('=') + 2)
                     print('Prime at end of list has ' + str(p_len) + ' digits.')
             else:
-                print(potential_primes)
+                print(prime_list)
         if probable == 1:
             progress_bar(1, 1), print(' 100%', end='')
             print('\nPotential primes:')
-            if len(potential_primes) >= 1:
-                print(('\n'.join(map(str, potential_primes))))
-                if potential_primes is not None:
-                    print('\'Potential\' primes found: ' + str(len(potential_primes)) + '')
-                    p_len = len(potential_primes[-1]) - (potential_primes[-1].index('=') + 2)
+            if len(prime_list) >= 1:
+                print(('\n'.join(map(str, prime_list))))
+                if prime_list is not None:
+                    print('\'Potential\' primes found: ' + str(len(prime_list)) + '')
+                    p_len = len(prime_list[-1]) - (prime_list[-1].index('=') + 2)
                     print('\'Potential\' prime at end of list has ' + str(p_len) + ' digits.')
             else:
-                print(potential_primes)
+                print(prime_list)
         if t < 60:
             print("\rOverall process took %.1f seconds." % t)
         if t >= 60:
