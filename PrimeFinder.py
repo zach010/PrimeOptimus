@@ -41,39 +41,17 @@ def prime_probability_multiprocess(n, c, q, t):
     return q.put(1)
 
 
-def segregate(num, precision):
-    mp.dps = precision
-    num = int(mp.floor(mp.sqrt(num)) + 1)
-    cores = pro_cnt
-    if num <= pro_cnt:
-        cores = num - 1
-    num_mod = mp.fmod(num, cores)
-    num_mods = [1 for _ in mp.arange(num_mod)]
-    while len(num_mods) < cores:
-        num_mods.append(0)
-    num_div = mp.floor(mp.fdiv(num, cores))
-    num_divs, ip = [], 0
-    while len(num_divs) < cores:
-        num_divs.append(num_div + num_mods[ip])
-        ip += 1
-    num_seg, place, seg = [num_divs[0]], num_divs[0], 1
-    while len(num_seg) < cores:
-        place += (num_divs[seg])
-        num_seg.append(place)
-        seg += 1
-    num_seg = [int(num_seg[i]) for i in range(len(num_seg))]
-    return num_seg, cores
+def segregate(n):
+    n = int(mp.floor(mp.sqrt(n))+1)
+    n_d = int(mp.ceil(mp.fdiv(n, pro_cnt)))
+    n_list = [[x, x+n_d] for x in range(1, n, n_d)]
+    n_list[0][0], n_list[-1][1] = 2, n
+    return n_list, len(n_list)
 
 
-def initialize(numb_seg, cores, number, probable, t_check):
+def initialize(n_list, cores, number, probable, t_check):
     q_list = [(multiprocessing.Queue()) for _ in range(cores)]
-    n_list = [[0 for _ in range(2)] for _ in range(cores)]
     const = number
-    for s in range(cores):
-        for ss in range(1, 2):
-            n_list[s][ss] = numb_seg[s]
-            n_list[s][ss - 1] = numb_seg[s - 1]
-    n_list[0][0] = 2
     if probable == 0:
         arg_list = [(n_list[args], const, q_list[args]) for args in range(cores)]
         processes = [multiprocessing.Process(target=prime_multiprocess, args=arg_list[args]) for args in range(cores)]
@@ -179,6 +157,8 @@ if __name__ == '__main__':
             else:
                 return print("\rInvalid Input."), start_program()
             start_function = int(input('Enter the number for \'n\' START:'))
+            if eval(function.replace('n', str(start_function))) == 0:
+                return print("\rInvalid start for function."), start_program()
             iterations = int(input('Enter the number of ITERATIONS:'))
             start_t = time.time()
         except (SyntaxError, NameError, ValueError):
@@ -187,8 +167,7 @@ if __name__ == '__main__':
         if probable == 0:
             for n in range(start_function, start_function + iterations):
                 f_sum = eval(function.replace('n', '' + str(n) + ''))
-                precision = len(str(f_sum)) + 4
-                num_segments, num_cores = segregate(f_sum, precision)
+                num_segments, num_cores = segregate(f_sum)
                 test_number = initialize(num_segments, num_cores, f_sum, probable, t_limit)
                 progress_bar((int(iterations)), n - start_function)
                 if n < 2 ** 800:
@@ -205,8 +184,7 @@ if __name__ == '__main__':
         if probable == 1:
             for n in range(start_function, start_function + iterations):
                 f_sum = eval(function.replace('n', '' + str(n) + ''))
-                precision = len(str(f_sum)) + 4
-                num_segments, num_cores = segregate(f_sum, precision)
+                num_segments, num_cores = segregate(f_sum)
                 test_number = initialize(num_segments, num_cores, f_sum, probable, t_limit)
                 progress_bar((int(iterations)), n - start_function)
                 if n < 2 ** 800:
