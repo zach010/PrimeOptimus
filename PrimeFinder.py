@@ -24,7 +24,6 @@ def progress_bar(total, progress):
 
 def prime_multiprocess(n, c, q):
     a, b, c = n[0], n[1], c
-    
     for i in range(a, b):
         if c % i == 0:
             return q.put(0)
@@ -169,7 +168,6 @@ if __name__ == '__main__':
         print('\r' + 'Initializing...', end='\n')
         prime_list = []
         probable, t_limit = probability()
-
         try:
             print("\nExamples of prime number functions in python: \n"
                   "Kynea primes: (2**n+1)**2-2\n"
@@ -180,19 +178,18 @@ if __name__ == '__main__':
                 eval(function.replace('n', '0'))
             else:
                 return print("\rInvalid Input."), start_program()
-            start_function = input('Enter the number for \'n\' START:')
-            start_function = eval(start_function)
+            start_function = int(input('Enter the number for \'n\' START:'))
             iterations = int(input('Enter the number of ITERATIONS:'))
             start_t = time.time()
         except (SyntaxError, NameError, ValueError):
             return print("\rInvalid Input."), start_program()
 
         if probable == 0:
-            for n in range(start_function, iterations):
-                it = eval(function.replace('n', '' + str(n) + ''))
-                precision = len(str(it)) + 4
-                num_segments, num_cores = segregate(it, precision)
-                t_prime = initialize(num_segments, num_cores, it, probable, t_limit)
+            for n in range(start_function, start_function + iterations):
+                f_sum = eval(function.replace('n', '' + str(n) + ''))
+                precision = len(str(f_sum)) + 4
+                num_segments, num_cores = segregate(f_sum, precision)
+                test_number = initialize(num_segments, num_cores, f_sum, probable, t_limit)
                 progress_bar((int(iterations)), n - start_function)
                 if n < 2 ** 800:
                     sys.stdout.write(' n=' + str(n + 1) + ' (Primes found: ' + str(len(prime_list)) + ')')
@@ -200,17 +197,17 @@ if __name__ == '__main__':
                 if n > 2 ** 800:
                     sys.stdout.write(' (Primes found: ' + str(len(prime_list)) + ')')
                     sys.stdout.flush()
-                if t_prime is not None:
-                    prime_list.append(str('ƒ(' + str(n) + ') = ' + str(t_prime) + ''))
+                if test_number is not None:
+                    prime_list.append(str('ƒ(' + str(n) + ') = ' + str(test_number) + ''))
                     if prime_list[0] == 'ƒ(1) = 1':
                         del prime_list[0]
 
         if probable == 1:
-            for n in range(start_function, iterations):
-                it = eval(function.replace('n', '' + str(n) + ''))
-                precision = len(str(it)) + 4
-                num_segments, num_cores = segregate(it, precision)
-                t_prime = initialize(num_segments, num_cores, it, probable, t_limit)
+            for n in range(start_function, start_function + iterations):
+                f_sum = eval(function.replace('n', '' + str(n) + ''))
+                precision = len(str(f_sum)) + 4
+                num_segments, num_cores = segregate(f_sum, precision)
+                test_number = initialize(num_segments, num_cores, f_sum, probable, t_limit)
                 progress_bar((int(iterations)), n - start_function)
                 if n < 2 ** 800:
                     sys.stdout.write(' n=' + str(n + 1) + ' (Potential primes found: ' + str(len(prime_list)) + ')')
@@ -218,8 +215,8 @@ if __name__ == '__main__':
                 if n > 2 ** 800:
                     sys.stdout.write(' (Potential primes found: ' + str(len(prime_list)) + ')')
                     sys.stdout.flush()
-                if t_prime is not None:
-                    prime_list.append(str('ƒ(' + str(n) + ') = ' + str(t_prime) + ''))
+                if test_number is not None:
+                    prime_list.append(str('ƒ(' + str(n) + ') = ' + str(test_number) + ''))
                     if prime_list[0] == 'ƒ(1) = 1':
                         del prime_list[0]
         stop_t = time.time()
