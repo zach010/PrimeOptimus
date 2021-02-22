@@ -138,9 +138,39 @@ Do you want to test for probable primes?:
 ```
 The program trimmed down a list of *probable primes* with a precision of 2^20 and found 47 possible primes from 0-50 in ƒ(n) = (2^n+1)^2-2. In a future commit, the distribution of prime numbers posed by the prime number theorem will be implemented alongside prime counting functions to estimate which probable primes should be deducted from the list at the end. I am also pondering a way to implement the Riemann Zeta function as a helper, but it slows things down quite a bit with large numbers.
 
-This program works better on a linux system because it opens and closes processes rapidly for each iteration. Windows has trouble with this. I have made a rewrite specially for windows named PrimeOptimus.py which opens a number of processes equal to the logical core count of your computer and keeps them open to feed data in and out instead. This version is much faster for making lists of primes that aren't too large. The only issue with this version: I can't effectively stop a Task object process after it has started without stopping and starting processes again. The reason you would want to is because if a Task object returns a zero, all the other Task objects are wasting their time on a segregation of the same number. I am working on a method. 
+This program works better on a linux system because it opens and closes processes rapidly for each iteration. Windows has trouble with this. I have made a rewrite specially for windows named PrimeOptimus.py which opens a number of processes equal to the logical core count of your computer and keeps them open to feed data in and out instead. This version is much faster for making lists of primes that aren't too large. The only issue with this version: I can't effectively stop a Task object process after it has started without stopping and starting processes again. The reason you would want to is because if a Task object returns a zero, all the other Task objects are wasting their time on a segregation of the same number. I am working on a method.
+Here is an output:
+```
+Enter prime number FUNCTION:n
+Enter the number for 'n' START:1
+Enter the number of ITERATIONS:100000
+Progress: ########## 100%
+Primes:
+ƒ(2) = 2
+ƒ(3) = 3
+ƒ(5) = 5
+ƒ(7) = 7
+ƒ(11) = 11
+ƒ(13) = 13
+ƒ(17) = 17
 
-This is an output from the MersennePrime.py finder:
+....etc...etc....
+
+ƒ(99901) = 99901
+ƒ(99907) = 99907
+ƒ(99923) = 99923
+ƒ(99929) = 99929
+ƒ(99961) = 99961
+ƒ(99971) = 99971
+ƒ(99989) = 99989
+ƒ(99991) = 99991
+Primes found: 9592
+Prime at end of list has 5 digits.
+Overall process took 47.0 seconds.
+```
+It found all 9592 primes from 3 to 100000 in 47.0 seconds and is 100% accurate since it divided everything in parrallel across my 8 hyperthreaded cores.
+You can clarify that there is 9592 primes between 10^0 and 10^5 in the table on https://en.wikipedia.org/wiki/Prime-counting_function
+If you think thats impressive, this is an output from the MersennePrime.py finder:
 ```
 For Mersenne (2^n)-1 enter ƒ(n):44497
 Progress: ■■■■■■■■■■ 100% 
