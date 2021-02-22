@@ -173,6 +173,37 @@ Overall process took 47.0 seconds.
 It found all 9592 primes from 1 to 100000 in 47.0 seconds and is 100% accurate since it divided everything in parrallel across my 8 hyperthreaded cores.
 You can clarify that there is 9592 primes between 10^0 and 10^5 in the table on https://en.wikipedia.org/wiki/Prime-counting_function.
 
+To speed it up even further we enter the function (n+n)-1 to skip all even digits including 2:
+```
+Enter prime number FUNCTION:(n+n)-1
+Enter the number for 'n' START:1
+Enter the number of ITERATIONS:50000
+Progress: ########## 100%
+Primes:
+ƒ(2) = 3
+ƒ(3) = 5
+ƒ(4) = 7
+ƒ(6) = 11
+ƒ(7) = 13
+ƒ(9) = 17
+
+....etc...etc....
+
+ƒ(49951) = 99901
+ƒ(49954) = 99907
+ƒ(49962) = 99923
+ƒ(49965) = 99929
+ƒ(49981) = 99961
+ƒ(49986) = 99971
+ƒ(49995) = 99989
+ƒ(49996) = 99991
+Primes found: 9591
+Prime at end of list has 5 digits.
+Overall process took 23.8 seconds.
+
+```
+Now it only took 23.8 seconds to find all primes from 1 to 100000 with a count of 9591 which is one less than 9592 since the function (n+n)-1 took away the only even numbered prime (2) at the beginning.
+
 If you think thats impressive, this is an output from the MersennePrime.py finder:
 ```
 For Mersenne (2^n)-1 enter ƒ(n):44497
