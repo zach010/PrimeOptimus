@@ -138,7 +138,9 @@ Do you want to test for probable primes?:
 ```
 The program trimmed down a list of *probable primes* with a precision of 2^20 and found 47 possible primes from 0-50 in ƒ(n) = (2^n+1)^2-2. In a future commit, the distribution of prime numbers posed by the prime number theorem will be implemented alongside prime counting functions to estimate which probable primes should be deducted from the list at the end. I am also pondering a way to implement the Riemann Zeta function as a helper, but it slows things down quite a bit with large numbers.
 
-This program works better on a linux system because it opens and closes processes rapidly for each iteration. Windows has trouble with this. I have made a rewrite specially for windows named PrimeOptimus.py which opens a number of processes equal to the logical core count of your computer and keeps them open to feed data in and out instead. This version is much faster for making lists of primes that aren't too large. The only issue with this version: I can't effectively stop a Task object process after it has started without stopping and starting processes again. The reason you would want to is because if a Task object returns a zero, all the other Task objects are wasting their time on a segregation of the same number. I am working on a method.
+This program works better on a linux system because it opens and closes processes rapidly for each iteration. Windows has trouble with this. 
+
+I have made a rewrite specially for windows named PrimeOptimus.py which opens a number of processes equal to the logical core count of your computer and keeps them open to feed data in and out instead. This version is much faster for making lists of primes that aren't too large. The only issue with this version: I can't effectively stop a Task object process after it has started without stopping and starting processes again. The reason you would want to is because if a Task object returns a zero, all the other Task objects are wasting their time on a segregation of the same number. I am working on a method.
 Here is an output:
 ```
 Enter prime number FUNCTION:n
