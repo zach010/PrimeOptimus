@@ -170,7 +170,7 @@ Primes found: 9592
 Prime at end of list has 5 digits.
 Overall process took 47.0 seconds.
 ```
-It found all 9592 primes from 3 to 100000 in 47.0 seconds and is 100% accurate since it divided everything in parrallel across my 8 hyperthreaded cores.
+It found all 9592 primes from 1 to 100000 in 47.0 seconds and is 100% accurate since it divided everything in parrallel across my 8 hyperthreaded cores.
 You can clarify that there is 9592 primes between 10^0 and 10^5 in the table on https://en.wikipedia.org/wiki/Prime-counting_function
 If you think thats impressive, this is an output from the MersennePrime.py finder:
 ```
