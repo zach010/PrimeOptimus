@@ -140,7 +140,7 @@ The program trimmed down a list of *probable primes* with a precision of 2^20 an
 
 This program works better on a linux system because it opens and closes processes rapidly for each iteration. Windows has trouble with this. 
 
-I have made a rewrite specially for windows named PrimeOptimus.py which opens a number of processes equal to the logical core count of your computer and keeps them open to feed data in and out instead. This version is much faster for making lists of primes that aren't too large. The only issue with this version: I can't effectively stop a Task object process after it has started without stopping and starting processes again. The reason you would want to is because if a Task object returns a zero, all the other Task objects are wasting their time on a segregation of the same number. I am working on a method.
+I have made a rewrite specially for windows named PrimeOptimus.py which opens a number of processes equal to the logical core count of your computer and keeps them open to feed data in and out instead. This version is much faster for making large lists of smaller primes. The only issue with this version: I can't effectively stop a Task object process after it has started without stopping and starting processes again. The reason you would want to is because if a Task object returns a zero, all the other Task objects are wasting their time on a segregation of the same number. I am working on a method.
 Here is an output:
 ```
 Enter prime number FUNCTION:n
