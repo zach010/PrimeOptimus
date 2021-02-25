@@ -213,7 +213,7 @@ Prime: YES.
 Length: 13395 digits.
 Overall process took: 1 minute and 47.5 seconds.
 ```
-Yes it only took 1 minute and 47.5 seconds to confirm a Mersenne prime number of 13395 digits long.
+Yes it only took 1 minute and 47.5 seconds to confirm a Mersenne prime number of 13395 digits long. To put it in perspective, imagine 1 followed by 13395 zeros.
 This program only confirms Mersenne Primes which are easier to pinpoint due to their symmetrical location being 1 less than a power of 2 which alternate as squares.
 The genius is in the algorithm of which I did not find myself. I only rewrote it.
 I have attempted to make it parralel processing, but all attempts have only made it slower since
