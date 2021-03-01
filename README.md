@@ -1,7 +1,7 @@
 # PrimeOptimus
 ****Multiprocessing Prime Number Finder****
 ```
-This code requires an extra non-default Python module to run named: mpmath.
+Some of this code requires an extra non-default Python module to run named: mpmath.
 ```
 Prime.py takes an input from a user and splits the input into smaller chunks across a 
 group of parallel processes that is equal to the total logical processors in your system.
