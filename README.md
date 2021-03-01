@@ -216,11 +216,11 @@ Overall process took: 1 minute and 47.5 seconds.
 Yes it only took 1 minute and 47.5 seconds to confirm a Mersenne prime number of 13395 digits long. To put it in perspective, imagine 1 followed by 13395 zeros.
 This program only confirms Mersenne Primes which are easier to pinpoint due to their symmetrical location being 1 less than a power of 2 which alternate as squares.
 The genius is in the algorithm of which I did not find myself. I only rewrote it.
-I have attempted to make it parralel processing, but all attempts have only made it slower since
+I have attempted to make it parallel processing, but all attempts have only made it slower since
 each iteration is based on a previous unknown modulus. The answer may be multiprocessing the modulus operator itself. Though I don't think it would be very efficient because you would have to do setup work for each process before the actual modulus computation even begins. The answer may just be a super high GHZ single core CPU for this particular algorithm.
 This website shows all Mersenne Primes that have been proven:
 https://www.mersenne.org/primes/
 (2^44497)-1 is listed.
 I would rather use my own program to find prime numbers because I know how it works and I when their program runs on your computer when you reach 99% complete with this algorithm, they could easily upload your current modulus and take the find from you.
 
-In a future commit, a version of the program will be able to save files as tables of prime number sequences generated from lists of functions ordered by their "sequential prime spread" to build a database that can grow big-data as pure combinations of prime number equations while utilizing Goldbach's conjecture.
+In a future commit, a version of the program will be able to save files as tables of prime number sequences generated from lists of functions ordered by their "sequential prime spread" to build a database that can grow big-data as pure combinations of prime number equations. It will attempt to utilize Goldbach's conjecture.
