@@ -223,4 +223,4 @@ https://www.mersenne.org/primes/
 (2^44497)-1 is listed.
 I would rather use my own program to find prime numbers because I know how it works and I when their program runs on your computer when you reach 99% complete with this algorithm, they could easily upload your current modulus and take the find from you.
 
-In a future commit, a version of the program will be able to save files as tables of prime number sequences generated from lists of functions ordered by their "sequential prime spread" to build databases that can represent data as pure combinations of prime number equations utilizing Goldbach's conjecture.
+In a future commit, a version of the program will be able to save files as tables of prime number sequences generated from lists of functions ordered by their "sequential prime spread" to build a database that can grow big-data as pure combinations of prime number equations utilizing Goldbach's conjecture.
