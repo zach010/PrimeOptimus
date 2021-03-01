@@ -41,7 +41,7 @@ Prime: No
 Length: 19
 Do you want to calculate if another number is Prime? (y/n): 
 ```
-Notice the time 0.2 seconds. The input number was the same but + 1. The algorithm is smart enough to terminate when any of the parallel processes returns a divisible number. This means that if the number is Prime, the processes will be running much longer as it continues to search for a divisor. With this method it is possible to make good predictions of large Primes without too much computing. Any number entered that is not Prime will return within a few seconds because of the way the algorithm works. The more threads your system has, the more certainty given to a Prime prediction without a full computation. Fish for a Prime by inspecting a number from multiple vantage points simultaneously.
+Notice the time 0.2 seconds. The input number was the same but + 1. The algorithm terminates when any of the parallel processes returns a divisible number. This means that if the number is Prime, the processes will be running much longer as it continues to search for a divisor. With this method it is possible to make better predictions of large Primes without too much computing. Any number entered that is not Prime will return within a few seconds because of the way the algorithm works. The more threads your system has, the more certainty given to a Prime prediction without a full computation. Fish for a Prime by inspecting a number from multiple vantage points simultaneously.
 
 Here is output from PrimeFinder.py:
 ```
