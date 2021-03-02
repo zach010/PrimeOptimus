@@ -168,7 +168,12 @@ if __name__ == '__main__':
             print("\nExamples of prime number functions in python: \n"
                   "Kynea primes: (2**n+1)**2-2\n"
                   "Mersenne primes: (2**n)-1\n"
-                  "Zach primes: 2*(n**2)-1\n")
+                  "Unique primes:\n"
+                  "2*(n**2)-1\n"
+                  "((n**2)*(n**2))+2\n"
+                  "((n*2)*(n**2))+1\n"
+                  "((n*2)*(n**2)**2)+1\n")
+
             function = input('Enter prime number FUNCTION:')
             if 'n' in function:
                 eval(function.replace('n', '0'))
