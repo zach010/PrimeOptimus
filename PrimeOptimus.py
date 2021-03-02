@@ -98,29 +98,28 @@ def segregate(n):
     return n_list, len(n_list)
 
 
-def initialize(n_list, cores, number, probable, t_check, tasks, results):
+def initialize(n_list, cores, number, tasks, results):
+    sum_list = []
+    for i in range(cores):
+        tasks.put(Task(n_list[i], number))
+    for i in range(cores):
+        sum_list.append(int(results.get()))
+    if 0 in sum_list:
+        return None
+    else:
+        return number
 
-    if probable == 0:
-        sum_list = []
-        for i in range(cores):
-            tasks.put(Task(n_list[i], number))
-        for i in range(cores):
-            sum_list.append(int(results.get()))
-        if 0 in sum_list:
-            return None
-        else:
-            return number
 
-    if probable == 1:
-        sum_list = []
-        for i in range(cores):
-            tasks.put(TaskProbable(n_list[i], number, t_check))
-        for i in range(cores):
-            sum_list.append(int(results.get()))
-        if 0 in sum_list:
-            return None
-        else:
-            return number
+def initialize_probable(n_list, cores, number, t_check, tasks, results):
+    sum_list = []
+    for i in range(cores):
+        tasks.put(TaskProbable(n_list[i], number, t_check))
+    for i in range(cores):
+        sum_list.append(int(results.get()))
+    if 0 in sum_list:
+        return None
+    else:
+        return number
 
 
 def probability():
@@ -192,17 +191,18 @@ if __name__ == '__main__':
                 w.start()
 
             for n in range(start_function, start_function + iterations):
-                f_sum = eval(function.replace('n', '' + str(n) + ''))
-                num_segments, num_cores = segregate(f_sum)
-
-                test_number = initialize(num_segments, num_cores, f_sum, probable, t_limit, tasks, results)
                 progress_bar((int(iterations)), n - start_function)
                 if n < 2 ** 800:
-                    sys.stdout.write(' n=' + str(n + 1) + ' (Primes found: ' + str(len(prime_list)) + ')')
+                    sys.stdout.write(' n=' + str(n) + ' (Primes found: ' + str(len(prime_list)) + ')')
                     sys.stdout.flush()
                 if n > 2 ** 800:
                     sys.stdout.write(' (Primes found: ' + str(len(prime_list)) + ')')
                     sys.stdout.flush()
+
+                f_sum = eval(function.replace('n', '' + str(n) + ''))
+                num_segments, num_cores = segregate(f_sum)
+                test_number = initialize(num_segments, num_cores, f_sum, tasks, results)
+
                 if test_number is not None:
                     prime_list.append(str('ƒ(' + str(n) + ') = ' + str(test_number) + ''))
                     if prime_list[0] == 'ƒ(1) = 1':
@@ -220,16 +220,18 @@ if __name__ == '__main__':
                 w.start()
 
             for n in range(start_function, start_function + iterations):
-                f_sum = eval(function.replace('n', '' + str(n) + ''))
-                num_segments, num_cores = segregate(f_sum)
-                test_number = initialize(num_segments, num_cores, f_sum, probable, t_limit, tasks, results)
                 progress_bar((int(iterations)), n - start_function)
                 if n < 2 ** 800:
-                    sys.stdout.write(' n=' + str(n + 1) + ' (Potential primes found: ' + str(len(prime_list)) + ')')
+                    sys.stdout.write(' n=' + str(n) + ' (Potential primes found: ' + str(len(prime_list)) + ')')
                     sys.stdout.flush()
                 if n > 2 ** 800:
                     sys.stdout.write(' (Potential primes found: ' + str(len(prime_list)) + ')')
                     sys.stdout.flush()
+
+                f_sum = eval(function.replace('n', '' + str(n) + ''))
+                num_segments, num_cores = segregate(f_sum)
+                test_number = initialize_probable(num_segments, num_cores, f_sum, t_limit, tasks, results)
+
                 if test_number is not None:
                     prime_list.append(str('ƒ(' + str(n) + ') = ' + str(test_number) + ''))
                     if prime_list[0] == 'ƒ(1) = 1':
