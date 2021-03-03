@@ -10,10 +10,11 @@ import multiprocessing
 
 class Cluster(multiprocessing.Process):
 
-    def __init__(self, task_queue, result_queue):
+    def __init__(self, task_queue, result_queue, state):
         multiprocessing.Process.__init__(self)
         self.task_queue = task_queue
         self.result_queue = result_queue
+        self.state = state
 
     def run(self):
         while True:
@@ -21,7 +22,7 @@ class Cluster(multiprocessing.Process):
             if next_task is None:
                 self.task_queue.task_done()
                 break
-            answer = next_task()
+            answer = next_task() if self.state.is_set() is False else 0
             self.task_queue.task_done()
             self.result_queue.put(answer)
         return
@@ -38,25 +39,6 @@ class Task(object):
             if c % i == 0:
                 return 0
         return 1
-
-
-class ClusterProbable(multiprocessing.Process):
-
-    def __init__(self, task_queue, result_queue):
-        multiprocessing.Process.__init__(self)
-        self.task_queue = task_queue
-        self.result_queue = result_queue
-
-    def run(self):
-        while True:
-            next_task = self.task_queue.get()
-            if next_task is None:
-                self.task_queue.task_done()
-                break
-            answer = next_task()
-            self.task_queue.task_done()
-            self.result_queue.put(answer)
-        return
 
 
 class TaskProbable(object):
@@ -98,27 +80,35 @@ def segregate(n):
     return n_list, len(n_list)
 
 
-def initialize(n_list, cores, number, tasks, results):
+def initialize(n_list, cores, number, tasks, results, states):
     sum_list = []
     for i in range(cores):
         tasks.put(Task(n_list[i], number))
-    for i in range(cores):
+    for _ in range(cores):
         sum_list.append(int(results.get()))
+        if 0 in sum_list:
+            states.set()
     if 0 in sum_list:
+        states.clear()
         return None
     else:
+        states.clear()
         return number
 
 
-def initialize_probable(n_list, cores, number, t_check, tasks, results):
+def initialize_probable(n_list, cores, number, t_check, tasks, results, states):
     sum_list = []
     for i in range(cores):
         tasks.put(TaskProbable(n_list[i], number, t_check))
     for i in range(cores):
         sum_list.append(int(results.get()))
+        if 0 in sum_list:
+            states.set()
     if 0 in sum_list:
+        states.clear()
         return None
     else:
+        states.clear()
         return number
 
 
@@ -180,7 +170,7 @@ if __name__ == '__main__':
             else:
                 return print("\rInvalid Input."), start_program()
             start_function = int(input('Enter the number for \'n\' START:'))
-            if eval(function.replace('n', str(start_function))) == 0:
+            if eval(function.replace('n', str(start_function))) <= 0:
                 return print("\rInvalid start for function."), start_program()
             iterations = int(input('Enter the number of ITERATIONS:'))
             start_t = time.time()
@@ -190,7 +180,8 @@ if __name__ == '__main__':
         if probable == 0:
             tasks = multiprocessing.JoinableQueue()
             results = multiprocessing.Queue()
-            cluster = [Cluster(tasks, results) for _ in range(pro_cnt)]
+            states = multiprocessing.Event()
+            cluster = [Cluster(tasks, results, states) for _ in range(pro_cnt)]
 
             for w in cluster:
                 w.start()
@@ -206,7 +197,7 @@ if __name__ == '__main__':
 
                 f_sum = eval(function.replace('n', '' + str(n) + ''))
                 num_segments, num_cores = segregate(f_sum)
-                test_number = initialize(num_segments, num_cores, f_sum, tasks, results)
+                test_number = initialize(num_segments, num_cores, f_sum, tasks, results, states)
 
                 if test_number is not None:
                     prime_list.append(str('ƒ(' + str(n) + ') = ' + str(test_number) + ''))
@@ -219,7 +210,8 @@ if __name__ == '__main__':
         if probable == 1:
             tasks = multiprocessing.JoinableQueue()
             results = multiprocessing.Queue()
-            cluster = [ClusterProbable(tasks, results) for _ in range(pro_cnt)]
+            states = multiprocessing.Event()
+            cluster = [Cluster(tasks, results, states) for _ in range(pro_cnt)]
 
             for w in cluster:
                 w.start()
@@ -235,7 +227,7 @@ if __name__ == '__main__':
 
                 f_sum = eval(function.replace('n', '' + str(n) + ''))
                 num_segments, num_cores = segregate(f_sum)
-                test_number = initialize_probable(num_segments, num_cores, f_sum, t_limit, tasks, results)
+                test_number = initialize_probable(num_segments, num_cores, f_sum, t_limit, tasks, results, states)
 
                 if test_number is not None:
                     prime_list.append(str('ƒ(' + str(n) + ') = ' + str(test_number) + ''))
